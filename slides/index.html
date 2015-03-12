@@ -4,10 +4,10 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>ELK-Stack bei Frontline</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="description" content="Search Technology Meetup Hamburg">
+		<meta name="author" content="Jens Fischer, Timo Zingel">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -15,10 +15,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- inline css sux -->
+		<style type="text/css">
+			.reveal section img {
+				border: 0;
+				box-shadow: 0 0 0;
+			}
+		</style>
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -40,13 +48,298 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>The HTML Presentation Framework</h3>
-					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-					</p>
+				<section data-markdown>
+					<script type="text/template">
+						# ELK-Stack bei Frontline
+						### Erfahrungen aus zwei Jahren produktivem Einsatz
+						
+						Timo Zingel / [@pyspam](http://twitter.com/pyspam)
+
+						Jens Fischer / [@jensfischerhh](http://twitter.com/jensfischerhh)
+					</script>
 				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Über Frontline
+					
+						 * Streetfashion onlineshop
+						 * since X
+					</script>
+
+					<aside class="notes" data-markdown>
+						Speaker notes test...
+					</aside>
+				</section>
+
+				<section>
+					<h2>Motivation</h2>
+
+					<div class="fragment">Ops @ Novomind:</div>
+					<div class="fragment">haben Shell Zugriff auf Live Server</dev>
+					<div class="fragment">Devs @ Frontline:</div>
+					<div class="fragment">haben <strong>keinen</strong> Shell Zugriff</dev>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Bug Fixing benötigt Log Zugriff
+
+						* ad hoc von Ops anfordern?
+						* Read-Only Shell Zugriff?
+						* Zeitgesteuert zu Devs kopieren?
+
+						##### Nicht wirklich praxistauglich
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## ELK
+
+						 * Howto scale ELK?
+
+						 * <img src="elasticsearch-logo.png" height="75"> **E** lasticsearch
+						 * <img src="logstash-logo.png" height="75">**L** ogstash
+						 * <img src="kibana-logo.png" height="75">**K** ibana
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section>
+						<h2>ELK setup</h2>
+
+						<p class="fragment fade-in">
+							<img src="elk-without-broker.png" width="50%">
+						</p>
+
+						<p class="fragment fade-in">
+							<img src="elk-with-broker.png" width="75%">
+						</p>
+
+
+					<aside class="notes" data-markdown>
+						* without broker
+						* with broker, entkopplung, queue, shipper performance
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Erste Schritte mit ELK
+
+						* Antwortzeiten aus ERP Logfile analysieren
+						* Q1 2013
+						  * Elasticsearch 0.9x
+						  * Logstash 1.1
+						  * Kibana 2
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## ELK für Server Logs
+
+						 * zu viele Log-Dateien
+						 * unstrukturiert
+						 * grep, awk?
+						 * deploy log format updates? -> staging ELK
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Life of a Log Event
+
+						 * create (apache access log, java logback)
+						 * transport (logstash push to redis)
+						 * analyze/filter/store? (logstash pop from redis, filter log event and push to elasticsearch)
+						 * backup (daily index, ES snapshots with curator)
+						 * delete (clear old snapshots, clear old indcies with curator)
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Logstash
+
+						 * input -> filter -> output
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## filter probleme?
+						### apache example
+						### logback example
+						 * stacktrace
+						 * xml
+						 * orders
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## multiline filter
+						 * stacktrace
+						 * xml
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## grok filter
+						 ```
+						 "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)"
+						 ```
+
+						 [grok debugger](https://grokdebug.herokuapp.com/)
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## filter lösungen
+						 * Elasticsearch? -> log in JSON
+						 * Apache LogFormat
+						 * logback-logstash-encoder
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Akzeptanz im Unternehmen
+
+						* __Logs__ interessiert nur IT
+						* __Bestellungen__ interessieren Marketing, Einkauf, Management
+						* Realtime Analytics fasziniert
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section>
+					<h2>Logback Beispiel</h2>
+
+					<pre><code data-trim contenteditable>
+ class OrderData {
+ 	List&lt;LineItem&gt; lineItems;
+	Money totalAmount;
+	PaymentType paymentType;
+	ShipperType shipperType; 
+ }
+					</code></pre>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						```
+						 Logger.info(orderData);
+						 ```
+						 
+						 ```
+						 {
+						 	"lineItems": [{}, {}, ...],
+						 	"totalAmount": 23.55,
+						 	"paymentType": "PAYPAL",
+						 	"shipperType": "DHL"
+						 }
+						 ```
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 				<section>
 					<h2>Hello There</h2>
