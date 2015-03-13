@@ -1,3 +1,45 @@
+## 13/03/15 Treffen
+
+ * MDC Felder
+ * unique request id
+ * CSV Expoert Kibana 4
+ 
+### TODOs Timo
+ * ApacheLogFormat suchen!
+ * logback.xml encoder config
+ * Stacktrace Dashboard
+ * Logvolumen?
+ * How to Scale
+
+### TODO Jens
+ * logfile aufteilung / fachliche trennung?
+ * type field / redis key name / logfile-Name conventions?
+ * ishop wire? logback-sifftingappender
+ * performance (`Doc Value`)
+ * Benchmarks (Logvolumen?)
+ * logback-logstash-appender AsyncDisruptorAppender
+ https://github.com/logstash/logstash-logback-encoder#usage
+
+### Ausblick
+
+ * ES Templates
+   * Datenvolumen begrenzen (kein `_all` Feld)
+   * `.raw` Felder
+   * *not analysed* Steuerung der Felder
+   * filter cache
+ * Monitoring
+   * Metriken
+ * Skalierung
+ * Kibana 4
+
+
+### weitere learnings
+ * ES: Queries vs. Filter
+   * aggregation by query
+   * -> Kibana 4
+ * Staging Setup um Konfigurationsänderungen zu testen
+ * redis died
+
 # Log management @frontline
 
 ## about frontline
@@ -50,7 +92,27 @@
 
  * input -> filter -> output
  
-## filter probleme?
+## filter
+
+* typische webserver log zeile 
+   * typisches parsen mit filtern
+   * `${COMBINEDAPACHELOG}`
+   * `FROM PATTERN`
+   * -> erzeugt:
+      * rubydebug beispiel
+   * kibana dashboard
+   * timestamps log event vs. index zeit
+   
+ * app log example
+   * timestamp
+   * loglevel
+   * class/method
+   * bspw. ishop log zeile
+   * patterns und tags und conditions
+   * default ishop log line
+   * stacktace und xml oder so (multiline)
+
+ 
 ### apache example
 ### logback example
  * stacktrace

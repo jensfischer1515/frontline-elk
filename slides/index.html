@@ -172,21 +172,6 @@
 					</aside>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Life of a Log Event
-
-						 * create (apache access log, java logback)
-						 * transport (logstash push to redis)
-						 * analyze/filter/store? (logstash pop from redis, filter log event and push to elasticsearch)
-						 * backup (daily index, ES snapshots with curator)
-						 * delete (clear old snapshots, clear old indcies with curator)
-					</script>
-					
-					<aside class="notes" data-markdown>
-
-					</aside>
-				</section>
 				<section>
 					<section>
 						<h2>Logstash</h2>
@@ -195,7 +180,7 @@
 							<img class="fragment roll-in" src="Logstash.svg" style="flex:1;" />
 					</section>
 					<section>
-						<h2 style="">Logstash plugins</h2>
+						<h2>Logstash plugins</h2>
 						<div style="display: flex;">
 							<div class="fragment" style="flex:1;">
 								<h3 style="">input</h3>
@@ -238,6 +223,27 @@
 							<a href="https://github.com/logstash-plugins">community plugins</a> <small>(github.com/logstash-plugins)</small>
 						</div>
 					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+						### Logstash-shipper
+						
+							* input: file
+							* filter: keine
+ 							* output: redis
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+						### Logstash-indexer
+						
+							* input: redis
+							* filter: ...
+ 							* output: elasticsearch
+						</script>
+					</section>
+
 					<section>
 						<h3>logstash config</h3>
 						<pre><code data-trim>
@@ -260,14 +266,176 @@ echo fooBar | ./bin/logstash -f simple.conf
 					</section>
 				</section>
 
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## Life of a Log Event
+
+							 * create (apache access log, java logback)
+							 * transport (logstash push to redis)
+							 * analyze/filter/store? (logstash pop from redis, filter log event and push to elasticsearch)
+							 * backup (daily index, ES snapshots with curator)
+							 * delete (clear old snapshots, clear old indcies with curator)
+						</script>
+						
+						<aside class="notes" data-markdown>
+
+						</aside>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## apache beispiel
+							
+							```
+							127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] "GET /xampp/status.php HTTP/1.1" 200 3891 "http://cadenza/xampp/navi.php" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0"
+							```
+							```
+							input { stdin { } }
+
+							filter {
+								grok {
+									match => { "message" => "%{COMBINEDAPACHELOG}" }
+								}
+								date {
+									match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+								}
+							}
+
+							output {
+								elasticsearch { host => localhost }
+								stdout { codec => rubydebug }
+							}
+							```
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							```
+							{
+								"message" => "127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] \"GET /xampp/status.php HTTP/1.1\" 200 3891 \"http://cadenza/xampp/navi.php\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0\"",
+								"@timestamp" => "2013-12-11T08:01:45.000Z",
+								"@version" => "1",
+								"host" => "cadenza",
+								"clientip" => "127.0.0.1",
+								"ident" => "-",
+								"auth" => "-",
+								"timestamp" => "11/Dec/2013:00:01:45 -0800",
+								"verb" => "GET",
+								"request" => "/xampp/status.php",
+								"httpversion" => "1.1",
+								"response" => "200",
+								"bytes" => "3891",
+								"referrer" => "\"http://cadenza/xampp/navi.php\"",
+								"agent" => "\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0\""
+							}
+							```
+							 [patterns](https://github.com/elastic/logstash/tree/v1.4.2/patterns) <small>(github.com/elastic/logstash/tree/v1.4.2/patterns)</small>
+						</script>
+
+						<aside class="notes" data-markdown></aside>
+					</section>
+				</section>
+
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## app server beispiel STACKTRACE
+							
+							```
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+NPE...
+							```
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							```
+							input { stdin { } }
+
+							filter {
+								multiline {}... TODO
+								grok {
+									match => { "message" => "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)" }
+								}
+								date {
+									match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+								}
+							}
+
+							output {
+								elasticsearch { host => localhost }
+								stdout { codec => rubydebug }
+							}
+							```
+						</script>
+
+						<aside class="notes" data-markdown></aside>
+					</section>
+				</section>
+
 				<section data-markdown>
 					<script type="text/template">
-						## filter probleme?
-						### apache example
-						### logback example
-						 * stacktrace
-						 * xml
-						 * orders
+						## probleme
+						
+						* grok
+							* komplex zu schreiben [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small>
+							* performance
+						* multiline
+							* performance
+							* multithread
 					</script>
 
 					<aside class="notes" data-markdown>
@@ -277,29 +445,9 @@ echo fooBar | ./bin/logstash -f simple.conf
 
 				<section data-markdown>
 					<script type="text/template">
-						## multiline filter
-						 * stacktrace
-						 * xml
 					</script>
 
-					<aside class="notes" data-markdown>
-
-					</aside>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## grok filter
-						 ```
-						 "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)"
-						 ```
-
-						 [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small>
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
+					<aside class="notes" data-markdown></aside>
 				</section>
 
 				<section data-markdown>
@@ -322,6 +470,7 @@ echo fooBar | ./bin/logstash -f simple.conf
 						* __Logs__ interessiert nur IT
 						* __Bestellungen__ interessieren Marketing, Einkauf, Management
 						* Realtime Analytics fasziniert
+						* Dashboards auf TFT in Büro
 					</script>
 
 					<aside class="notes" data-markdown>
