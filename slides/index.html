@@ -73,33 +73,36 @@
 				</section>
 
 				<section>
-					<h2>Motivation</h2>
+					<section>
+						<h2>Motivation</h2>
 
-					<div class="fragment">Ops @ Novomind:</div>
-					<div class="fragment">haben Shell Zugriff auf Live Server</dev>
-					<div class="fragment">Devs @ Frontline:</div>
-					<div class="fragment">haben <strong>keinen</strong> Shell Zugriff</dev>
+						<img src="motivation.svg" />
+						<br>
 
-					<aside class="notes" data-markdown>
+						<div class="fragment">Ops @Novomind: Shell Zugriff</div>
+						<div class="fragment">Devs @Frontline: <strong>keinen</strong> Shell Zugriff</div>
 
-					</aside>
+						<aside class="notes" data-markdown>
+
+						</aside>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## Bug Fixing benötigt Log Zugriff
+
+							* ad hoc von Ops anfordern?
+							* Read-Only Shell Zugriff?
+							* Zeitgesteuert zu Devs kopieren?
+
+							##### Nicht wirklich praxistauglich
+						</script>
+
+						<aside class="notes" data-markdown>
+
+						</aside>
+					</section>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Bug Fixing benötigt Log Zugriff
-
-						* ad hoc von Ops anfordern?
-						* Read-Only Shell Zugriff?
-						* Zeitgesteuert zu Devs kopieren?
-
-						##### Nicht wirklich praxistauglich
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
-				</section>
 
 				<section data-markdown>
 					<script type="text/template">
@@ -118,15 +121,18 @@
 				</section>
 
 				<section>
+					<section>
 						<h2>ELK setup</h2>
 
 						<p class="fragment fade-in">
 							<img src="elk-without-broker.png" width="50%">
 						</p>
+				</section>
 
-						<p class="fragment fade-in">
-							<img src="elk-with-broker.png" width="75%">
-						</p>
+				<section>
+						<h3>ELK mit broker</h3>
+						<img src="ELK-with-broker.svg" width="75%">
+				</section>
 
 
 					<aside class="notes" data-markdown>
@@ -176,22 +182,82 @@
 						 * backup (daily index, ES snapshots with curator)
 						 * delete (clear old snapshots, clear old indcies with curator)
 					</script>
-
+					
 					<aside class="notes" data-markdown>
 
 					</aside>
 				</section>
+				<section>
+					<section>
+						<h2>Logstash</h2>
+							<img src="logstash-logo.png" style="height: 20vh" />
+							<br>
+							<img class="fragment roll-in" src="Logstash.svg" style="flex:1;" />
+					</section>
+					<section>
+						<h2 style="">Logstash plugins</h2>
+						<div style="display: flex;">
+							<div class="fragment" style="flex:1;">
+								<h3 style="">input</h3>
+								<ul >
+									<li>file</li>
+									<li>redis</li>
+									<li>stdin</li>
+									<li>syslog</li>
+									<li>heroku</li>
+									<li>...</li>
+								</ul>
+							</div>
+							<div class="fragment" style="flex:1;">
+								<h3 style="">filter</h3>
+								<ul >
+									<li>grok</li>
+									<li>multiline</li>
+									<li>geoip</li>
+									<li>useragent</li>
+									<li>csv</li>
+									<li>...</li>
+								</ul>
+							</div>
+							<div class="fragment" style="flex:1;">
+								<h3 style="">output</h3>
+								<ul >
+									<li>elasticsearch</li>
+									<li>redis</li>
+									<li>statsd</li>
+									<li>graphite</li>
+									<li>irc</li>
+									<li>...</li>
+								</ul>
+							</div>
+						</div>
+						<br>
+						<div class="fragment">
+							<a href="http://logstash.net/docs/1.4.2/">logstash plugin documentation</a> <small>(logstash.net/docs/1.4.2)</small>
+							<br>
+							<a href="https://github.com/logstash-plugins">community plugins</a> <small>(github.com/logstash-plugins)</small>
+						</div>
+					</section>
+					<section>
+						<h3>logstash config</h3>
+						<pre><code data-trim>
+# simple.conf
+input { stdin {} }
+output { stdout { codec => rubydebug } }
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+echo fooBar | ./bin/logstash -f simple.conf
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+{
+       "message" => "foo",
+      "@version" => "1",
+    "@timestamp" => "2015-03-10T13:53:25.775Z",
+          "host" => "work"
+}
 
-				<section data-markdown>
-					<script type="text/template">
-						# Logstash
-
-						 * input -> filter -> output
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
+						</code></pre>
+					</section>
 				</section>
 
 				<section data-markdown>
@@ -228,7 +294,7 @@
 						 "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)"
 						 ```
 
-						 [grok debugger](https://grokdebug.herokuapp.com/)
+						 [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small>
 					</script>
 
 					<aside class="notes" data-markdown>
@@ -264,36 +330,67 @@
 				</section>
 
 				<section>
-					<h2>Logback Beispiel</h2>
+					<section data-markdown>
+						<script type="text/template">
+							### Logback beispiel
+							```
+							class OrderData {
+								List<LineItem> lineItems;
+								Money totalAmount;
+								PaymentType paymentType;
+								ShipperType shipperType; 
+							}
+							 ```
+							```
+							Logger.info(append("order", orderData), "order success");
+							```
+						</script>
 
-					<pre><code data-trim contenteditable>
- class OrderData {
- 	List&lt;LineItem&gt; lineItems;
-	Money totalAmount;
-	PaymentType paymentType;
-	ShipperType shipperType; 
- }
-					</code></pre>
+						<aside class="notes" data-markdown>
 
-					<aside class="notes" data-markdown>
+						</aside>
+					</section>
 
-					</aside>
+
+					<section data-markdown>
+						<script type="text/template">
+						#### logstash output
+							```
+							{
+								"message": "order success",
+								"@version": "1",
+								"@timestamp": "2015-03-10T13:53:25.775Z",
+								"host": "work",
+								"order": {
+									"lineItems": [{}, {}, ...],
+									"totalAmount": 23.55,
+									"paymentType": "PAYPAL",
+									"shipperType": "DHL"
+								}
+							}
+							 ```
+						</script>
+
+						<aside class="notes" data-markdown>
+
+						</aside>
+					</section>
+
+					<section>
+					<h4>kibana dashboard</h4>
+						<img src="orders_dashboard.png">
+
+						<aside class="notes" data-markdown>
+						</aside>
+					</section>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-						```
-						 Logger.info(orderData);
-						 ```
-						 
-						 ```
-						 {
-						 	"lineItems": [{}, {}, ...],
-						 	"totalAmount": 23.55,
-						 	"paymentType": "PAYPAL",
-						 	"shipperType": "DHL"
-						 }
-						 ```
+						## Elasticsearch
+						* daily logstash index
+						* templates
+						* snapshots
 					</script>
 
 					<aside class="notes" data-markdown>
@@ -303,25 +400,14 @@
 
 				<section data-markdown>
 					<script type="text/template">
-
+						## kurz noch: scale
+						* coreos/docker
 					</script>
 
 					<aside class="notes" data-markdown>
 
 					</aside>
 				</section>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
