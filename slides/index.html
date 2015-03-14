@@ -88,13 +88,15 @@
 					</section>
 					<section data-markdown>
 						<script type="text/template">
-							## Bug Fixing benötigt Log Zugriff
+							<h2>Bug Fixing benötigt Log Zugriff</h2>
 
-							* ad hoc von Ops anfordern?
-							* Read-Only Shell Zugriff?
-							* Zeitgesteuert zu Devs kopieren?
+							<ul>
+								<li class="fragment">ad hoc von Ops anfordern?</li>
+								<li class="fragment">Read-Only Shell Zugriff?</li>
+								<li class="fragment">Zeitgesteuert zu Devs kopieren?</li>
+							</ul>
 
-							##### Nicht wirklich praxistauglich
+							<img class="fragment" src="meh.png" height="300"/>
 						</script>
 
 						<aside class="notes" data-markdown>
@@ -141,20 +143,39 @@
 					</aside>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Erste Schritte mit ELK
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## Erste Schritte mit ELK
 
-						* Antwortzeiten aus ERP Logfile analysieren
-						* Q1 2013
-						  * Elasticsearch 0.9x
-						  * Logstash 1.1
-						  * Kibana 2
-					</script>
+							* Anforderung: ERP Logfile analysieren
+							  * Latenz-Historie
+							* Q1 2013
+							  * Elasticsearch 0.9x
+							  * Logstash 1.1
+							  * Kibana 2
+						</script>
 
-					<aside class="notes" data-markdown>
+						<aside class="notes" data-markdown>
 
-					</aside>
+						</aside>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							## Schnell brauchbare Ergebnisse
+
+							* Wenig Aufwand, tolle Visualisierung
+							* Naive Herangehensweise:
+							  * komplexer grep Filter
+							  * Full Re-Index zu jeder Stunde
+
+						</script>
+
+						<aside class="notes" data-markdown>
+
+						</aside>
+					</section>
 				</section>
 
 				<section data-markdown>
@@ -547,6 +568,54 @@ NPE...
 					</aside>
 				</section>
 
+				<section data-markdown>
+					<script type="text/template">
+						<h2>Ausblick: Logfiles</h2>
+
+						<ul>
+							<li class="fragment">Doppelte Logfiles abbauen (<code>*.json</code> vs. <code>*.log</code>)</li>
+							<li class="fragment"><code>logrotate</code> bzw. RollingPolicy anpassen</li>
+							<li class="fragment">Anzahl verschiedener Logfiles reduzieren
+								<ul>
+									<li><code>application.log</code> vs. <br><code>[order|paypal|billpay|...].log</code></li>
+									<li>Differenzierung über <code>type</code></li>
+								</ul>
+							</li>
+							<li class="fragment">Weniger FS Locks durch [SiftingAppender](http://logback.qos.ch/manual/appenders.html#SiftingAppender) <small>(http://logback.qos.ch/manual/appenders.html#SiftingAppender)</small>
+								<ul>
+									<li>ein Logfile pro Thread</li>
+								</ul>
+							</li>
+							<li class="fragment">LMAX Disruptor RingBuffers mit [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
+						</ul>
+					</script>
+					
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						<h2>Ausblick: Elasticsearch</h2>
+
+						<ul>
+							<li class="fragment">Mehr als nur eine Node</li>						
+							<li class="fragment">Verwendung von [Index Template](http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html)</small>
+								<ul>
+									<li><code>_all</code> Feld deaktivieren</li>
+									<li>Kompression aktivieren</li>
+									<li>Felder mit <code>not_analyzed</code> indizieren <br><small>(oder nur auf <code>*.raw</code> filtern)</small></li>
+								</ul>
+							</li>
+							<li class="fragment"><code>disk-based</code> statt <code>in-memory fielddata</code> mit [Doc Values](http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html)</smalll> </li>
+						</ul>
+					</script>
+					
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## kurz noch: scale
