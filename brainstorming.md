@@ -4,7 +4,11 @@
 * (JF) Metriken: Cluster, Dokumente
 * (JF) Live Kibana (NASA access logs)
 
-
+* Screenshot apache logs
+* Screenshot stacktraces
+* Foto Dashboard TFT
+* Logvolumen?
+ * Frontline Zahlen?
 
 ## 13/03/15 Treffen
 
