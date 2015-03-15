@@ -1,3 +1,11 @@
+## 15/03/15 Skype
+
+* PDF Fallback: http://localhost:8000/?print-pdf#/
+* (JF) Metriken: Cluster, Dokumente
+* (JF) Live Kibana (NASA access logs)
+
+
+
 ## 13/03/15 Treffen
 
  * MDC Felder
