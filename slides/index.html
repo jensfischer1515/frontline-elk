@@ -265,7 +265,9 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 }
 						</code></pre>
 					</section>
-
+						<aside class="notes" data-markdown>
+live code
+						</aside>
 				</section>
 				<section>
 					<section data-markdown>
@@ -380,6 +382,7 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 						</script>
 
 						<aside class="notes" data-markdown>
+						LIVE DEMO
 							* wir kennen App Log format
 							* -> parsen
 							* aber was ist hiermit? -> next slide
@@ -596,9 +599,12 @@ Caused by: java.lang.NullPointerException: null
 					</section>
 					<section data-markdown>
 						<script type="text/template">
-							* [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
-							* [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
-							
+							## [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
+
+
+							```
+							LogFormat "{}" TODO
+							```
 
 							Note:
 							- JSON Format
@@ -606,6 +612,45 @@ Caused by: java.lang.NullPointerException: null
 							- eine Zeile pro Event
 							- JSON Codec im Shipper & Indexer
 						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							## [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
+
+							```
+							<configuration>
+							  <appender name="ISHOP" class="FileAppender">
+							    <file>${catalina.base}/logs/ishop.log</file>
+							    <layout class="PatternLayout">
+							      <pattern>
+							      	%-28(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread]) 
+							      	[#:%exHash] [%X{sessionid}@%X{ipaddr}] 
+							      	[%X{rnd}/%X{username}] %-5level 
+							      	%marker %c - %m%n
+							      </pattern>
+							    </layout>
+							  </appender>
+
+							  <appender name="ISHOP_LOGSTASH" class="FileAppender">
+							    <file>${catalina.base}/logs/ishop.json</file>
+							    <encoder class="LogstashEncoder" />
+							  </appender>
+
+							  <root>
+							    <level value="INFO" />
+							    <appender-ref ref="ISHOP" />
+							    <appender-ref ref="ISHOP_LOGSTASH" />
+							  </root>
+							</configuration>
+							```
+							* MDC fields (class, method, ...) <!-- .element: class="fragment" -->
+							* unique-request-id <!-- .element: class="fragment" -->
+						</script>
+
+						<aside class="notes" data-markdown>
+
+						</aside>
 					</section>
 					
 				</section>
@@ -698,49 +743,10 @@ output {
 					</aside>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Logback Konfiguration
-
-						```
-						<configuration>
-						  <appender name="ISHOP" class="FileAppender">
-						    <file>${catalina.base}/logs/ishop.log</file>
-						    <layout class="PatternLayout">
-						      <pattern>
-						      	%-28(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread]) 
-						      	[#:%exHash] [%X{sessionid}@%X{ipaddr}] 
-						      	[%X{rnd}/%X{username}] %-5level 
-						      	%marker %c - %m%n
-						      </pattern>
-						    </layout>
-						  </appender>
-
-						  <appender name="ISHOP_LOGSTASH" class="FileAppender">
-						    <file>${catalina.base}/logs/ishop.json</file>
-						    <encoder class="LogstashEncoder" />
-						  </appender>
-
-						  <root>
-						    <level value="INFO" />
-						    <appender-ref ref="ISHOP" />
-						    <appender-ref ref="ISHOP_LOGSTASH" />
-						  </root>
-						</configuration>
-						```
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
-				</section>
-
-
-
 				<section>
 					<section data-markdown>
 						<script type="text/template">
-							### Nontech example
+							### inhaltliches logging
 							```
 							class OrderData {
 								List<LineItem> lineItems;
@@ -750,19 +756,21 @@ output {
 							}
 							 ```
 							```
-							Logger.info(append("order", orderData), "order success");
+							Logger.info(Markers.append("order", orderData), "order success");
 							```
 						</script>
 
 						<aside class="notes" data-markdown>
-							Wie kann man ELK für nicht tech. Daten nutzen?
+							- Wie kann man ELK für nicht tech. Daten nutzen?
+							- Beim Entwickeln an den Log-Payload denken
 						</aside>
 					</section>
 
 
 					<section data-markdown>
 						<script type="text/template">
-						#### logstash output
+							#### logstash output
+							
 							```
 							{
 								"message": "order success",
@@ -776,7 +784,7 @@ output {
 									"shipperType": "DHL"
 								}
 							}
-							 ```
+							```
 						</script>
 
 						<aside class="notes" data-markdown>
@@ -791,19 +799,6 @@ output {
 						<aside class="notes" data-markdown>
 						</aside>
 					</section>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Elasticsearch
-						* daily logstash index
-						* templates
-						* snapshots
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
 				</section>
 
 				<section data-markdown>
@@ -854,6 +849,23 @@ output {
 
 					</aside>
 				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+						## Elasticsearch
+						* daily logstash index
+						* snapshots
+						* [Curator](https://github.com/elastic/curator)
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+
+
 				<section data-markdown>
 					<script type="text/template">
 						## 
