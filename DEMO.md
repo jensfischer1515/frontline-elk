@@ -2,7 +2,8 @@
 
 ## Simple Logstash Demo
 
-echo fooBar | ./bin/logstash -f simple.conf
+	cd logstash-1.4.2
+	echo fooBar | ./bin/logstash -f s../frontline-elk/imple.conf
 
 
 ## Apache Access Log Demo
@@ -18,8 +19,7 @@ echo fooBar | ./bin/logstash -f simple.conf
 	wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.tar.gz
 	tar xvzf elasticsearch-1.4.4.tar.gz
 	cd elasticsearch-1.4.4
-	./bin/elasticsearch --http.cors.enabled=true --http.cors.allow-origin=http://localhost:8000 &
-	cd ..
+	./bin/elasticsearch --http.cors.enabled=true --http.cors.allow-origin=*
 	open http://localhost:9200/_status?pretty
 
 
@@ -28,8 +28,7 @@ echo fooBar | ./bin/logstash -f simple.conf
 	wget https://download.elasticsearch.org/logstash/logstash/logstash-1.4.2.tar.gz
 	tar xvzf logstash-1.4.2.tar.gz
 	cd logstash-1.4.2
-	cat ../access_log_Jul95 | ./bin/logstash -f apache_elasticsearch.conf
-	cd ..
+	cat ../access_log_Jul95 | ./bin/logstash -f ../frontline-elk/apache_elasticsearch.conf
 
 
 ### Kibana 3 starten
@@ -38,8 +37,8 @@ echo fooBar | ./bin/logstash -f simple.conf
 	tar xvzf kibana-3.1.2.tar.gz
 	cd kibana-3.1.2
 	npm install -g local-web-server
-	ws &
-	open http://localhost:8000
+	ws --port 5600
+	open http://localhost:5600
 
 
 ### Kibana 4 starten
@@ -47,6 +46,5 @@ echo fooBar | ./bin/logstash -f simple.conf
 	wget https://download.elasticsearch.org/kibana/kibana/kibana-4.0.1-darwin-x64.tar.gz
 	tar xvzf kibana-4.0.1-darwin-x64.tar.gz
     cd kibana-4.0.1-darwin-x64
-    ./bin/kibana &
-    cd ..
+    ./bin/kibana
 	open http://localhost:5601
