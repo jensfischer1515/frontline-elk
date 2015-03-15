@@ -148,12 +148,21 @@
 						<script type="text/template">
 							## Erste Schritte mit ELK
 
-							* Anforderung: ERP Logfile analysieren
-							  * Latenz-Historie
-							* Q1 2013
-							  * Elasticsearch 0.9x
-							  * Logstash 1.1
-							  * Kibana 2
+							<ul>
+								<li class="fragment">Q1 2013
+									<ul>
+										<li>Elasticsearch 0.90.x</li>
+										<li>Logstash 1.1.9</li>
+										<li>Kibana 2.x</li>
+									</ul>
+								</li>
+								<li class="fragment">Anforderung: ERP Latenz Analyse
+									<ul>
+										<li>Logfile Historie indizieren</li>
+										<li>CSV Export der Ergebnisse</li>
+									</ul>
+								</li>
+							</ul>
 						</script>
 
 						<aside class="notes" data-markdown>
@@ -165,10 +174,15 @@
 						<script type="text/template">
 							## Schnell brauchbare Ergebnisse
 
-							* Wenig Aufwand, tolle Visualisierung
-							* Naive Herangehensweise:
-							  * komplexer grep Filter
-							  * Full Re-Index zu jeder Stunde
+							<ul>
+								<li class="fragment">Wenig Aufwand, tolle Visualisierung</li>
+								<li class="fragment">Naive Herangehensweise:
+									<ul>
+										<li>komplexer Logstash Filter</li>
+										<li>Full Re-Index zu jeder Stunde</li>
+									</ul>
+								</li>
+							</ul>
 
 						</script>
 
@@ -245,26 +259,7 @@
 						</div>
 					</section>
 
-					<section data-markdown>
-						<script type="text/template">
-						### Logstash-shipper
-						
-							* input: file
-							* filter: keine
- 							* output: redis
-						</script>
-					</section>
-
-					<section data-markdown>
-						<script type="text/template">
-						### Logstash-indexer
-						
-							* input: redis
-							* filter: ...
- 							* output: elasticsearch
-						</script>
-					</section>
-
+					
 					<section>
 						<h3>logstash config</h3>
 						<pre><code data-trim>
@@ -277,14 +272,83 @@ echo fooBar | ./bin/logstash -f simple.conf
 						</code></pre>
 						<pre class="fragment"><code data-trim>
 {
-       "message" => "foo",
+       "message" => "fooBar",
       "@version" => "1",
-    "@timestamp" => "2015-03-10T13:53:25.775Z",
-          "host" => "work"
+    "@timestamp" => "2015-03-15T10:00:42.149Z",
+          "host" => "jfischer-mac"
 }
-
 						</code></pre>
 					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h3>Logstash Shipper @ Frontline</h3>
+						
+						<pre><code data-trim>
+input {
+  file {
+    path => "/var/logs/ishop_logstash.log"
+    type => "ishop_logstash"
+    codec => "json"
+  }
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+filter {
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+output {
+  if [type] == "ishop_logstash" {
+     redis { 
+     	host => "redis" 
+     	data_type => "list" 
+     	key => "ftl-app-ishop-logstash" 
+     }
+  }
+}
+						</code></pre>
+					</section>
+
+
+					<section>
+						<h3>Logstash Indexer @ Frontline</h3>
+						
+						<pre><code data-trim>
+input {							
+    redis {
+      host => "redis"
+      type => "ishop_logstash"
+      key => "ftl-app-ishop-logstash"
+      data_type => "list"
+      codec => json
+      add_field => { "source_host" => "live" }
+    }
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+filter {
+  if [source_host] == "live" and [type] == "ishop_logstash" {
+    mutate {
+      rename => [ "ipaddr", "ip" ]
+    }
+  }
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+output {
+  if [source_host] == "live" {
+    elasticsearch_http {
+      host => "elasticsearch"
+    }
+  }
+}
+						</code></pre>
+					</section>
+
+
 				</section>
 
 				<section>
@@ -499,6 +563,45 @@ NPE...
 					</aside>
 				</section>
 
+				<section data-markdown>
+					<script type="text/template">
+						## Logback Konfiguration
+
+						```
+						<configuration>
+						  <appender name="ISHOP" class="FileAppender">
+						    <file>${catalina.base}/logs/ishop.log</file>
+						    <layout class="PatternLayout">
+						      <pattern>
+						      	%-28(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread]) 
+						      	[#:%exHash] [%X{sessionid}@%X{ipaddr}] 
+						      	[%X{rnd}/%X{username}] %-5level 
+						      	%marker %c - %m%n
+						      </pattern>
+						    </layout>
+						  </appender>
+
+						  <appender name="ISHOP_LOGSTASH" class="FileAppender">
+						    <file>${catalina.base}/logs/ishop.json</file>
+						    <encoder class="LogstashEncoder" />
+						  </appender>
+
+						  <root>
+						    <level value="INFO" />
+						    <appender-ref ref="ISHOP" />
+						    <appender-ref ref="ISHOP_LOGSTASH" />
+						  </root>
+						</configuration>
+						```
+					</script>
+
+					<aside class="notes" data-markdown>
+
+					</aside>
+				</section>
+
+
+
 				<section>
 					<section data-markdown>
 						<script type="text/template">
@@ -577,7 +680,7 @@ NPE...
 							<li class="fragment"><code>logrotate</code> bzw. RollingPolicy anpassen</li>
 							<li class="fragment">Anzahl verschiedener Logfiles reduzieren
 								<ul>
-									<li><code>application.log</code> vs. <br><code>[order|paypal|billpay|...].log</code></li>
+									<li><code>application.log</code> vs. <br><code>[order|paypal|billpay|diva|epoq|js|...].log</code></li>
 									<li>Differenzierung über <code>type</code></li>
 								</ul>
 							</li>
@@ -586,7 +689,7 @@ NPE...
 									<li>ein Logfile pro Thread</li>
 								</ul>
 							</li>
-							<li class="fragment">LMAX Disruptor RingBuffers mit [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
+							<li class="fragment">LMAX Disruptor RingBuffer mit [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
 						</ul>
 					</script>
 					
