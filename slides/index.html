@@ -56,12 +56,7 @@
 						Timo Zingel / [@pyspam](http://twitter.com/pyspam)
 
 						Jens Fischer / [@jensfischerhh](http://twitter.com/jensfischerhh)
-
-				    
 					</script>
-					<aside class="notes">
-        			xxx
-  				</aside>
 				</section>
 
 				<section data-markdown>
@@ -98,18 +93,15 @@
 					<section data-markdown>
 						<script type="text/template">
 							<h2>Bug Fixing benötigt Log Zugriff</h2>
-
 							<ul>
 								<li class="fragment">ad hoc von Ops anfordern?</li>
 								<li class="fragment">Read-Only Shell Zugriff?</li>
 								<li class="fragment">Zeitgesteuert zu Devs kopieren?</li>
 							</ul>
-
 							<img class="fragment" src="meh.png" height="300"/>
 						</script>
 
 						<aside class="notes" data-markdown>
-
 						</aside>
 					</section>
 				</section>
@@ -126,10 +118,6 @@
 							<img src="ELK-without-broker2.svg" width="60%">
 						</p>
 				</section>
-
-
-
-
 					<aside class="notes" data-markdown>
 						* without broker
 						* with broker, entkopplung, queue, shipper performance
@@ -180,7 +168,6 @@
 						</script>
 
 						<aside class="notes" data-markdown>
-
 						</aside>
 					</section>
 				</section>
@@ -282,16 +269,12 @@ live code
 							  - in Echtzeit?
 							  - Redis Broker
 						</script>
-
-
 					</section> 
 	 				<section>
 						<h3>ELK mit broker</h3>
 						<img src="ELK-with-broker.svg" width="75%">
 					</section>
-				</section> 
-
-
+				</section>
 
 				<section>
 				<!--
@@ -324,7 +307,6 @@ live code
 						</script>
 						
 						<aside class="notes" data-markdown>
-
 						</aside>
 					</section>
 					<section data-markdown>
@@ -853,33 +835,37 @@ output {
 
 				<section data-markdown>
 					<script type="text/template">
-						## Elasticsearch
-						* daily logstash index
-						* snapshots
-						* [Curator](https://github.com/elastic/curator)
+						## Logvolumen
+						* 45 Tage im ES
+							* daily index
+							* daily snapshots
+							* daily cleanup
+						* [Curator](https://github.com/elastic/curator) <small>(github.com/elastic/curator)</small>
 					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
 				</section>
-
-
 
 				<section data-markdown>
 					<script type="text/template">
-						## 
-						* Jede Komponente lässt sich skalieren
-						* Staging ELK Stack zum testen
-						* docker
+						## Staging ELK
+						* neue Konfigurationen testen
+						* Jede Komponente leicht skalierbar
+							* docker?
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Vielen Dank
+
+						## Fragen?
+
+						Link zu Folien: ...
 					</script>
 
 					<aside class="notes" data-markdown>
 
 					</aside>
 				</section>
-
-
 			</div>
 		</div>
 
