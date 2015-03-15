@@ -114,34 +114,20 @@
 					</section>
 				</section>
 
-
-				<section data-markdown>
-					<script type="text/template">
-						## ELK
-
-						 * **E**lasticsearch
-						 * **L**ogstash
-						 * **K**ibana
-					</script>
-
-					<aside class="notes" data-markdown>
-						### ELK: Komponenten
-					</aside>
-				</section>
-
 				<section>
 					<section>
-						<h2>ELK stack</h2>
-
+						<h2>ELK</h2>
+						<ul class="fragment">
+							<li><strong>E</strong>lasticsearch</li>
+							<li><strong>L</strong>ogstash</li>
+							<li><strong>K</strong>ibana</li>
+						</ul>
 						<p class="fragment fade-in">
-							<img src="ELK-without-broker.svg" width="75%">
+							<img src="ELK-without-broker2.svg" width="60%">
 						</p>
 				</section>
 
-				<section>
-						<h3>ELK mit broker</h3>
-						<img src="ELK-with-broker.svg" width="75%">
-				</section>
+
 
 
 					<aside class="notes" data-markdown>
@@ -197,21 +183,6 @@
 
 						</aside>
 					</section>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## ELK für Server Logs
-
-						 * zu viele Log-Dateien
-						 * unstrukturiert
-						 * grep, awk?
-						 * deploy log format updates? -> staging ELK
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
 				</section>
 
 				<section>
@@ -296,75 +267,29 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 					</section>
 
 				</section>
-
 				<section>
-					<section>
-						<h3>Logstash Shipper @ Frontline</h3>
-						<pre><code data-trim>
-input {
-  file {
-    path => "/var/logs/ishop_logstash.log"
-    type => "ishop_logstash"
-    codec => "json"
-  }
-}
-						</code></pre>
-						<pre class="fragment"><code data-trim>
-filter {
-}
-						</code></pre>
-						<pre class="fragment"><code data-trim>
-output {
-  if [type] == "ishop_logstash" {
-    redis { 
-      host => "redis" 
-      data_type => "list" 
-      key => "ftl-app-ishop-logstash" 
-    }
-  }
-}
-						</code></pre>
-						<p class="fragment">keine Filter im Shipper</p>
+					<section data-markdown>
+						<script type="text/template">
+							## Live Logs
+								
+							* viele Log-Dateien
+							* unstrukturiert
+
+							 Note:
+							  - nächste Schritte Live Logs
+							  - in Echtzeit?
+							  - Redis Broker
+						</script>
+
+
+					</section> 
+	 				<section>
+						<h3>ELK mit broker</h3>
+						<img src="ELK-with-broker.svg" width="75%">
 					</section>
+				</section> 
 
 
-					<section>
-						<h3>Logstash Indexer @ Frontline</h3>
-						
-						<pre><code data-trim>
-input {							
-  redis {
-    host => "redis"
-    type => "ishop_logstash"
-    key => "ftl-app-ishop-logstash"
-    data_type => "list"
-    codec => json
-    add_field => { "source_host" => "live" }
-  }
-}
-						</code></pre>
-						<pre class="fragment"><code data-trim>
-filter {
-  if [source_host] == "live" and [type] == "ishop_logstash" {
-    mutate {
-      rename => [ "ipaddr", "ip" ]
-    }
-  }
-}
-						</code></pre>
-						<pre class="fragment"><code data-trim>
-output {
-  if [source_host] == "live" {
-    elasticsearch_http {
-      host => "elasticsearch"
-    }
-  }
-}
-						</code></pre>
-					</section>
-
-
-				</section>
 
 				<section>
 				<!--
@@ -649,19 +574,18 @@ Caused by: java.lang.NullPointerException: null
 					<section data-markdown>
 						<script type="text/template">
 							# codecs
+							## JSON?  <!-- .element: class="fragment" -->
 
 							Note:
 							- Logge für Logstash?
+							- ES output? JSON?
 						</script>
 					</section>
 					<section data-markdown>
 						<script type="text/template">
-							## codecs
-							- JSON
-								* strukturiert
-								* typisiert
-							* [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
-							* [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
+							# JSON
+							* strukturiert <!-- .element: class="fragment" -->
+							* typisiert <!-- .element: class="fragment" -->
 
 							Note:
 							- JSON Format
@@ -670,8 +594,95 @@ Caused by: java.lang.NullPointerException: null
 							- JSON Codec im Shipper & Indexer
 						</script>
 					</section>
-				</section>
+					<section data-markdown>
+						<script type="text/template">
+							* [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
+							* [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
+							
 
+							Note:
+							- JSON Format
+							- keine Filter
+							- eine Zeile pro Event
+							- JSON Codec im Shipper & Indexer
+						</script>
+					</section>
+					
+				</section>
+				<section>
+					<section>
+						<h3>Logstash Shipper @ Frontline</h3>
+						<pre><code data-trim>
+input {
+  file {
+    path => "/var/logs/ishop_logstash.log"
+    type => "ishop_logstash"
+    codec => "json"
+  }
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+output {
+  if [type] == "ishop_logstash" {
+    redis { 
+      host => "redis" 
+      data_type => "list" 
+      key => "ftl-app-ishop-logstash" 
+    }
+  }
+}
+						</code></pre>
+						<p class="fragment">keine Filter im Shipper</p>
+
+						<aside class="notes" data-markdown>
+							- IST Zustand
+							- file input
+							- redis output
+							- **keine** filter
+						</aside>
+					</section>
+
+
+					<section>
+						<h3>Logstash Indexer @ Frontline</h3>
+						
+						<pre><code data-trim>
+input {							
+  redis {
+    host => "redis"
+    type => "ishop_logstash"
+    key => "ftl-app-ishop-logstash"
+    data_type => "list"
+    codec => json
+    add_field => { "source_host" => "live" }
+  }
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+filter {
+  if [source_host] == "live" and [type] == "ishop_logstash" {
+    mutate {
+      rename => [ "ipaddr", "ip" ]
+    }
+  }
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+output {
+  if [source_host] == "live" {
+    elasticsearch_http {
+      host => "elasticsearch"
+    }
+  }
+}
+						</code></pre>
+						<aside class="notes" data-markdown>
+							- redis input
+							- es output
+							- kleine filter
+						</aside>
+					</section>
+				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## Akzeptanz im Unternehmen
@@ -845,8 +856,10 @@ Caused by: java.lang.NullPointerException: null
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## kurz noch: staging und skalieren
-						* coreos/docker
+						## 
+						* Jede Komponente lässt sich skalieren
+						* Staging ELK Stack zum testen
+						* docker
 					</script>
 
 					<aside class="notes" data-markdown>
