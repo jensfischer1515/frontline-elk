@@ -3,7 +3,7 @@
 ## Simple Logstash Demo
 
 	cd logstash-1.4.2
-	echo fooBar | ./bin/logstash -f s../frontline-elk/imple.conf
+	echo "Hello Logstash" | ./bin/logstash -f s../frontline-elk/imple.conf
 
 
 ## Apache Access Log Demo
@@ -12,6 +12,8 @@
 
 	wget ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz
 	gunzip NASA_access_log_Jul95.gz
+
+	wget -O www.almhuette-raith.at_access.log http://www.almhuette-raith.at/apache-log/access.log
 
 
 ### Elasticsearch starten
