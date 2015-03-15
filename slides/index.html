@@ -264,15 +264,22 @@
 						<h3>logstash config</h3>
 						<pre><code data-trim>
 # simple.conf
-input { stdin {} }
-output { stdout { codec => rubydebug } }
+input { 
+	stdin {
+	} 
+}
+output { 
+	stdout { 
+		codec => rubydebug 
+	} 
+}
 						</code></pre>
 						<pre class="fragment"><code data-trim>
-echo fooBar | ./bin/logstash -f simple.conf
+echo "Hello Logstash" | ./bin/logstash -f simple.conf
 						</code></pre>
 						<pre class="fragment"><code data-trim>
 {
-       "message" => "fooBar",
+       "message" => "Hello Logstash",
       "@version" => "1",
     "@timestamp" => "2015-03-15T10:00:42.149Z",
           "host" => "jfischer-mac"
