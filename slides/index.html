@@ -56,7 +56,12 @@
 						Timo Zingel / [@pyspam](http://twitter.com/pyspam)
 
 						Jens Fischer / [@jensfischerhh](http://twitter.com/jensfischerhh)
+
+				    
 					</script>
+					<aside class="notes">
+        			xxx
+  				</aside>
 				</section>
 
 				<section data-markdown>
@@ -71,11 +76,9 @@
 						* ca. 80 Mitarbeiter
 						* Scrum Team mit 6 Entwicklern
 
+						Note:
+							test
 					</script>
-
-					<aside class="notes" data-markdown>
-						Speaker notes test...
-					</aside>
 				</section>
 
 				<section>
@@ -89,7 +92,7 @@
 						<div class="fragment">Devs @Frontline: <strong>keinen</strong> Shell Zugriff</div>
 
 						<aside class="notes" data-markdown>
-
+							test
 						</aside>
 					</section>
 					<section data-markdown>
@@ -216,7 +219,8 @@
 						<h2>Logstash</h2>
 							<img src="logstash-logo.png" style="height: 20vh" />
 							<br>
-							<img class="fragment roll-in" src="Logstash.svg" style="flex:1;" />
+							<img class="fragment" src="Logstash.svg" style="flex:1;" />
+							<!-- roll-in effekt kills speaker notes -->
 					</section>
 					<section>
 						<h2>Logstash plugins</h2>
@@ -269,13 +273,13 @@
 						<pre><code data-trim>
 # simple.conf
 input { 
-	stdin {
-	} 
+    stdin {
+    } 
 }
 output { 
-	stdout { 
-		codec => rubydebug 
-	} 
+    stdout { 
+        codec => rubydebug 
+    } 
 }
 						</code></pre>
 						<pre class="fragment"><code data-trim>
@@ -296,7 +300,6 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 				<section>
 					<section>
 						<h3>Logstash Shipper @ Frontline</h3>
-						
 						<pre><code data-trim>
 input {
   file {
@@ -313,14 +316,15 @@ filter {
 						<pre class="fragment"><code data-trim>
 output {
   if [type] == "ishop_logstash" {
-     redis { 
-     	host => "redis" 
-     	data_type => "list" 
-     	key => "ftl-app-ishop-logstash" 
-     }
+    redis { 
+      host => "redis" 
+      data_type => "list" 
+      key => "ftl-app-ishop-logstash" 
+    }
   }
 }
 						</code></pre>
+						<p class="fragment">keine Filter im Shipper</p>
 					</section>
 
 
@@ -329,14 +333,14 @@ output {
 						
 						<pre><code data-trim>
 input {							
-    redis {
-      host => "redis"
-      type => "ishop_logstash"
-      key => "ftl-app-ishop-logstash"
-      data_type => "list"
-      codec => json
-      add_field => { "source_host" => "live" }
-    }
+  redis {
+    host => "redis"
+    type => "ishop_logstash"
+    key => "ftl-app-ishop-logstash"
+    data_type => "list"
+    codec => json
+    add_field => { "source_host" => "live" }
+  }
 }
 						</code></pre>
 						<pre class="fragment"><code data-trim>
@@ -363,6 +367,7 @@ output {
 				</section>
 
 				<section>
+				<!--
 					<section data-markdown>
 						<script type="text/template">
 							## Life of a Log Event
@@ -378,9 +383,26 @@ output {
 
 						</aside>
 					</section>
+				-->
 					<section data-markdown>
 						<script type="text/template">
-							## apache beispiel
+							## Filter
+
+							* file-input liefert ein Event pro Zeile
+							* Log-Event mit Regex parsen
+								* grok
+								* multiline
+
+							* strukturiert in ES speichern
+						</script>
+						
+						<aside class="notes" data-markdown>
+
+						</aside>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## apache
 							
 							```
 							127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] "GET /xampp/status.php HTTP/1.1" 200 3891 "http://cadenza/xampp/navi.php" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0"
@@ -403,6 +425,10 @@ output {
 							}
 							```
 						</script>
+						<aside class="notes" data-markdown>
+							one line -> one Log-Event
+							maintained patterns
+						</aside>
 					</section>
 					<section data-markdown>
 						<script type="text/template">
@@ -428,7 +454,11 @@ output {
 							 [patterns](https://github.com/elastic/logstash/tree/v1.4.2/patterns) <small>(github.com/elastic/logstash/tree/v1.4.2/patterns)</small>
 						</script>
 
-						<aside class="notes" data-markdown></aside>
+						<aside class="notes" data-markdown>
+							* wir kennen App Log format
+							* -> parsen
+							* aber was ist hiermit? -> next slide
+						</aside>
 					</section>
 				</section>
 
@@ -436,7 +466,7 @@ output {
 					<section data-markdown>
 						<!-- https://gist.github.com/edalquist/5467723#file-gistfile1-txt -->
 						<script type="text/template">
-							## app server beispiel STACKTRACE
+							## STACKTRACE
 							
 							```
 ERROR [TP-Processor87] o.j.p.web.ExceptionLoggingFilter 2013-04-26 09:25:25,923 - Request processing failed; nested exception is java.lang.NullPointerException
@@ -543,15 +573,23 @@ Caused by: java.lang.NullPointerException: null
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
 	... 72 common frames omitted
 							```
+							**multiline & grok filter!** <!-- .element: class="fragment" -->
+
+							Note:
+							- also was haben wir gemacht?
+							- multiline filter
 						</script>
+						<aside class="notes" data-markdown>
+							
+						</aside>
 					</section>
 					<section data-markdown>
 						<script type="text/template">
 							```
-							input { stdin { } }
-
 							filter {
-								multiline {}... TODO
+								multiline {
+									... TODO	
+								}
 								grok {
 									match => { "message" => "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)" }
 								}
@@ -559,53 +597,79 @@ Caused by: java.lang.NullPointerException: null
 									match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
 								}
 							}
-
-							output {
-								elasticsearch { host => localhost }
-								stdout { codec => rubydebug }
-							}
 							```
-						</script>
 
-						<aside class="notes" data-markdown></aside>
+							Note:
+								- funktionierte erstmal ganz gut
+						</script>
 					</section>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## probleme
-						
-						* grok
-							* komplex zu schreiben [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small>
-							* performance
-						* multiline
-							* performance
-							* multithread
-					</script>
+				<section>
+					<section>
+						<h2>probleme</h2>
+						<div style="display: flex;">
+							<div class="fragment" style="flex:1;">
+								<h4 style="">grok</h4>
+								<ul>
+									<li>komplexe Regex</li>
+									<li>performance</li>
+								</ul>
+							</div>
+							<div class="fragment" style="flex:1;">
+								<h4 style="">multiline</h4>
+								<ul>
+									<li>multithreading</li>
+									<li>performance</li>
+								</ul>
+							</div>
+						</div>
+						<br>
+						<div class="fragment">
+							<ul>
+								<li>logstash-indexer stirbt</li>
+								<li>Echtzeit geht verloren</li>
+								<li>Logs gehen verloren</li>
+							</ul>
+						</div>
+						<!-- [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small> -->
+						<aside class="notes" data-markdown>
+						* shipper:
+							* keine Filter
+							* pro Zeile ein Event
+							* kennt kein Format
+						* skalierte aber überhaupt nicht mehr
+						* Montag: logstash-indexer tot
+							* logs hängen mehrere Tage zurück
+							* del redis-key
+						* was tun damit es stabil wird:
+							* codecs
+						</aside>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							# codecs
 
-					<aside class="notes" data-markdown>
+							Note:
+							- Logge für Logstash?
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## codecs
+							- JSON
+								* strukturiert
+								* typisiert
+							* [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
+							* [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
 
-					</aside>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-					</script>
-
-					<aside class="notes" data-markdown></aside>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## filter lösungen
-						 * Elasticsearch? -> log in JSON
-						 * Apache LogFormat
-						 * logback-logstash-encoder
-					</script>
-
-					<aside class="notes" data-markdown>
-
-					</aside>
+							Note:
+							- JSON Format
+							- keine Filter
+							- eine Zeile pro Event
+							- JSON Codec im Shipper & Indexer
+						</script>
+					</section>
 				</section>
 
 				<section data-markdown>
@@ -665,7 +729,7 @@ Caused by: java.lang.NullPointerException: null
 				<section>
 					<section data-markdown>
 						<script type="text/template">
-							### Logback beispiel
+							### Nontech example
 							```
 							class OrderData {
 								List<LineItem> lineItems;
@@ -680,7 +744,7 @@ Caused by: java.lang.NullPointerException: null
 						</script>
 
 						<aside class="notes" data-markdown>
-
+							Wie kann man ELK für nicht tech. Daten nutzen?
 						</aside>
 					</section>
 
@@ -781,7 +845,7 @@ Caused by: java.lang.NullPointerException: null
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## kurz noch: scale
+						## kurz noch: staging und skalieren
 						* coreos/docker
 					</script>
 
