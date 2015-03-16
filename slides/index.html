@@ -65,9 +65,8 @@
 
 						* Onlineshop für Streetfashion
 							* 1986 als Musik-Mailorder gegründet
-							* 1994 Sortiment auf Streetfashion umgestellt
-							* 1996 ziehdichan.de
-							* 2004 frontlineshop.com
+							* 1996 Streetfashion: *www.ziehdichan.de*
+							* 2004 *www.frontlineshop.com*
 						* ca. 80 Mitarbeiter
 						* Scrum Team mit 6 Entwicklern
 
@@ -117,8 +116,7 @@
 						<img src="ELK-without-broker2.svg" width="60%">
 					</p>
 					<aside class="notes" data-markdown>
-						* without broker
-						* with broker, entkopplung, queue, shipper performance
+						* einfacher ELK Stack
 					</aside>
 				</section>
 
@@ -171,10 +169,13 @@
 
 				<section>
 					<h2>Logstash</h2>
-						<img src="logstash-logo.png" style="height: 20vh" />
-						<br>
-						<img class="fragment" src="Logstash.svg" style="flex:1;" />
-						<!-- roll-in effekt kills speaker notes -->
+					<img src="logstash-logo.png" style="height: 20vh" />
+					<br>
+					<img class="fragment" src="Logstash.svg" style="flex:1;" />
+					<aside class="notes" data-markdown>
+						- logstash pipe
+						- Log-Event
+					</aside>
 				</section>
 				<section>
 					<h2>Logstash plugins</h2>
@@ -219,6 +220,9 @@
 						<br>
 						<a href="https://github.com/logstash-plugins">community plugins</a> <small>(github.com/logstash-plugins)</small>
 					</div>
+					<aside class="notes" data-markdown>
+						- etliche Plugins für jeden Anwendungsfall
+					</aside>
 				</section>
 
 					
@@ -373,114 +377,58 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 					## STACKTRACE
 					
 					```
-ERROR [TP-Processor87] o.j.p.web.ExceptionLoggingFilter 2013-04-26 09:25:25,923 - Request processing failed; nested exception is java.lang.NullPointerException
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:894) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:778) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:617) ~[servlet-api.jar:na]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:717) ~[servlet-api.jar:na]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.springframework.web.filter.ShallowEtagHeaderFilter.doFilterInternal(ShallowEtagHeaderFilter.java:58) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:330) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:118) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:84) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:103) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:113) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:45) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilter(BasicAuthenticationFilter.java:150) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:91) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:183) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter.doFilter(AbstractPreAuthenticatedProcessingFilter.java:94) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.jasig.portal.spring.security.preauth.PortalPreAuthenticatedProcessingFilter.doFilter(PortalPreAuthenticatedProcessingFilter.java:169) ~[PortalPreAuthenticatedProcessingFilter.class:na]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:105) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160) ~[spring-security-web-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.jasig.portal.security.ThreadNamingRequestFilter.doFilterInternal(ThreadNamingRequestFilter.java:76) ~[ThreadNamingRequestFilter.class:na]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter.doFilterInternal(OpenEntityManagerInViewFilter.java:147) ~[spring-orm-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.jasig.portal.web.ExceptionLoggingFilter.doFilter(ExceptionLoggingFilter.java:54) ~[ExceptionLoggingFilter.class:na]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127) [catalina.jar:6.0.35]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102) [catalina.jar:6.0.35]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109) [catalina.jar:6.0.35]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293) [catalina.jar:6.0.35]
-	at org.apache.jk.server.JkCoyoteHandler.invoke(JkCoyoteHandler.java:190) [tomcat-coyote.jar:6.0.35]
-	at org.apache.jk.common.HandlerRequest.invoke(HandlerRequest.java:291) [tomcat-coyote.jar:6.0.35]
-	at org.apache.jk.common.ChannelSocket.invoke(ChannelSocket.java:776) [tomcat-coyote.jar:6.0.35]
-	at org.apache.jk.common.ChannelSocket.processConnection(ChannelSocket.java:705) [tomcat-coyote.jar:6.0.35]
-	at org.apache.jk.common.ChannelSocket$SocketConnection.runIt(ChannelSocket.java:898) [tomcat-coyote.jar:6.0.35]
-	at org.apache.tomcat.util.threads.ThreadPool$ControlRunnable.run(ThreadPool.java:690) [tomcat-coyote.jar:6.0.35]
-	at java.lang.Thread.run(Thread.java:662) [na:1.6.0_30]
-Caused by: java.lang.NullPointerException: null
-	at org.jasig.portal.groups.ReferenceIndividualGroupService.findLocalMemberGroups(ReferenceIndividualGroupService.java:332) ~[ReferenceIndividualGroupService.class:na]
-	at org.jasig.portal.groups.ReferenceIndividualGroupService.findMemberGroups(ReferenceIndividualGroupService.java:368) ~[ReferenceIndividualGroupService.class:na]
-	at org.jasig.portal.groups.ReferenceIndividualGroupService.findMembers(ReferenceIndividualGroupService.java:396) ~[ReferenceIndividualGroupService.class:na]
-	at org.jasig.portal.groups.EntityGroupImpl.initializeMembers(EntityGroupImpl.java:520) ~[EntityGroupImpl.class:na]
-	at org.jasig.portal.groups.EntityGroupImpl.getMemberGroupKeys(EntityGroupImpl.java:388) ~[EntityGroupImpl.class:na]
-	at org.jasig.portal.groups.EntityGroupImpl.getMemberGroups(EntityGroupImpl.java:415) ~[EntityGroupImpl.class:na]
-	at org.jasig.portal.groups.EntityGroupImpl.getMembers(EntityGroupImpl.java:432) ~[EntityGroupImpl.class:na]
-	at org.jasig.portal.layout.dlm.remoting.GroupListHelperImpl.getEntity(GroupListHelperImpl.java:165) ~[GroupListHelperImpl.class:na]
-	at org.jasig.portal.rest.EntitiesRESTController.findEntity(EntitiesRESTController.java:76) ~[EntitiesRESTController.class:na]
-	at org.jasig.portal.rest.EntitiesRESTController$$FastClassByCGLIB$$c12bcf87.invoke(<generated>) ~[cglib-nodep-2.2.2.jar:na]
-	at net.sf.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204) ~[cglib-nodep-2.2.2.jar:na]
-	at org.springframework.aop.framework.Cglib2AopProxy$CglibMethodInvocation.invokeJoinpoint(Cglib2AopProxy.java:689) ~[spring-aop-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150) ~[spring-aop-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:64) ~[spring-security-core-3.1.3.RELEASE.jar:3.1.3.RELEASE]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172) ~[spring-aop-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.aop.framework.Cglib2AopProxy$DynamicAdvisedInterceptor.intercept(Cglib2AopProxy.java:622) ~[spring-aop-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.jasig.portal.rest.EntitiesRESTController$$EnhancerByCGLIB$$64d80bdb.findEntity(<generated>) ~[cglib-nodep-2.2.2.jar:na]
-	at sun.reflect.GeneratedMethodAccessor1095.invoke(Unknown Source) ~[na:na]
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_30]
-	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_30]
-	at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMethodInvoker.java:176) ~[spring-web-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.invokeHandlerMethod(AnnotationMethodHandlerAdapter.java:436) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.handle(AnnotationMethodHandlerAdapter.java:424) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:923) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
-	... 72 common frames omitted
+09:26:36.538 [catalina-exec-423] [#:dDdGKiLmEKeOwBJgTxN2HNgEckB] [c4178934f02c4102a4239ab5748cf0da1217cc01.live1@85.31.11.202] [540443758/guest@579852812] ERROR  com.frontline.shop.web.taglib.IncludeTag - Could not render jsp /WEB-INF/jsp/frontline/pages/checkout/checkout_shipper.jsp
+org.apache.jasper.JasperException: An exception occurred processing JSP page /WEB-INF/jsp/frontline/pages/checkout/checkout_shipper.jsp at line 9
+
+6:   <h2 class="headline"><i:message key="checkout.step2.heading" /></h2>
+7:   <div class="shipping"></div>
+8:   <div>
+9:     <p><i:out value="${model.currentShipper.displayName}, ${model.currentShipper.deliveryTime}" /></p>
+10:     <i:url var="shippingFormUrl" of="${urlObject}" destination="ShippingMethod" />
+11:     <a href="${shippingFormUrl}" class="button light"><i:message key="checkout.edit" /></a>
+12:   </div>
+
+
+Stacktrace:
+        at org.apache.jasper.servlet.JspServletWrapper.handleJspException(JspServletWrapper.java:521) ~[jasper.jar:6.0.35]
+        at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:430) ~[jasper.jar:6.0.35]
+        at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:313) ~[jasper.jar:6.0.35]
+        at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:260) ~[jasper.jar:6.0.35]
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:717) ~[servlet-api.jar:na]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290) ~[catalina.jar:6.0.35]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206) ~[catalina.jar:6.0.35]
+        at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:646) ~[catalina.jar:6.0.35]
+        at org.apache.catalina.core.ApplicationDispatcher.doInclude(ApplicationDispatcher.java:551) ~[catalina.jar:6.0.35]
+        at org.apache.catalina.core.ApplicationDispatcher.include(ApplicationDispatcher.java:488) ~[catalina.jar:6.0.35]
+        at org.apache.jasper.runtime.JspRuntimeLibrary.include(JspRuntimeLibrary.java:968) ~[jasper.jar:6.0.35]
+        at org.apache.jasper.runtime.PageContextImpl.include(PageContextImpl.java:624) ~[jasper.jar:6.0.35]
+        at com.frontline.shop.web.taglib.IncludeTag.render(IncludeTag.java:136) ~[web-17.0.0.jar:na]
+        at com.frontline.shop.web.taglib.IncludeTag.endTag(IncludeTag.java:95) ~[web-17.0.0.jar:na]
+        at com.frontline.shop.web.taglib.AbstractReusableTag.doEndTag(AbstractReusableTag.java:33) ~[web-17.0.0.jar:na]
+        at org.apache.jsp.WEB_002dINF.jsp.frontline.pages.page_005fcheckout_jsp._jspx_meth_i_005finclude_005f5(page_005fcheckout_jsp.java:580) ~[na:na]
+        at org.apache.jsp.WEB_002dINF.jsp.frontline.pages.page_005fcheckout_jsp._jspx_meth_c_005fwhen_005f3(page_005fcheckout_jsp.java:545) ~[na:na]
+        at org.apache.jsp.WEB_002dINF.jsp.frontline.pages.page_005fcheckout_jsp._jspx_meth_c_005fchoose_005f1(page_005fcheckout_jsp.java:468) ~[na:na]
+        at org.apache.jsp.WEB_002dINF.jsp.frontline.pages.page_005fcheckout_jsp._jspService(page_005fcheckout_jsp.java:97) ~[na:na]
+        at com.commons.lang.Exceptions.shorten(Unknown Source) ~[ishop-commons-1.27.jar:na]
+Caused by: javax.el.PropertyNotFoundException: Property 'currentShipper' not found on type com.frontline.shop.core.checkout.shipping.CheckoutShippingModel
+        at javax.el.BeanELResolver$BeanProperties.get(BeanELResolver.java:214) ~[el-api.jar:2.1.FR]
+        at javax.el.BeanELResolver$BeanProperties.access$400(BeanELResolver.java:191) ~[el-api.jar:2.1.FR]
+        at javax.el.BeanELResolver.property(BeanELResolver.java:300) ~[el-api.jar:2.1.FR]
+        at javax.el.BeanELResolver.getValue(BeanELResolver.java:81) ~[el-api.jar:2.1.FR]
+        at javax.el.CompositeELResolver.getValue(CompositeELResolver.java:54) ~[el-api.jar:2.1.FR]
+        at org.apache.el.parser.AstValue.getValue(AstValue.java:123) ~[jasper-el.jar:6.0.35]
+        at org.apache.el.parser.AstDynamicExpression.getValue(AstDynamicExpression.java:42) ~[jasper-el.jar:6.0.35]
+        at org.apache.el.parser.AstCompositeExpression.getValue(AstCompositeExpression.java:48) ~[jasper-el.jar:6.0.35]
+        at org.apache.el.ValueExpressionImpl.getValue(ValueExpressionImpl.java:186) ~[jasper-el.jar:6.0.35]
+        at org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate(PageContextImpl.java:938) ~[jasper.jar:6.0.35]
+        at org.apache.jsp.WEB_002dINF.jsp.frontline.pages.checkout.checkout_005fshipper_jsp._jspx_meth_i_005fout_005f0(checkout_005fshipper_jsp.java:126) ~[na:na]
+        at org.apache.jsp.WEB_002dINF.jsp.frontline.pages.checkout.checkout_005fshipper_005feditable_jsp._jspService(checkout_005fshipperjsp.java:75) ~[na:na]
+        ... 1 common frames omitted
 					```
 					**multiline & grok filter!** <!-- .element: class="fragment" -->
 
 					Note:
-					- also was haben wir gemacht?
+					- wie parse ich das denn jetzt?
 					- multiline filter
 				</script>
 				<aside class="notes" data-markdown>
@@ -492,13 +440,12 @@ Caused by: java.lang.NullPointerException: null
 					```
 					filter {
 						multiline {
-							... TODO	
+							pattern => "^${TIME}"
+							negate => true
+							what => "previous"
 						}
 						grok {
 							match => { "message" => "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)" }
-						}
-						date {
-							match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
 						}
 					}
 					```
@@ -577,8 +524,10 @@ Caused by: java.lang.NullPointerException: null
 
 
 					```
-					LogFormat "{}" TODO
+					LogFormat '{"@timestamp":"%{%Y-%m-%dT%H:%M:%S%z}t","@version":"1","message":"access","clientip":"%a","ip":"%a","auth":"%u","ident":"%l","verb":"%m","url":{"original":"%<U","final":"%>U"},"query":"%q","request":{"original":"%<U%<q","final":"%>U%>q"},"response":%>s,"referrer":"%{Referer}i","agent":"%{User-Agent}i","xforwardedfor":"%{X-Forwarded-For}i","location":"%{Location}o","sessionid":"%{JSESSIONID}C","ishopuserid":"%{i.u.v2}C","microseconds":%D,"bytes":%B,"protocol":"%H","hostname":"%{Host}i","localip":"%A","servername":"%V","port":%p}' logstash
 					```
+
+					<img src="slow_requests.png" width="90%" />
 
 					Note:
 					- JSON Format
@@ -707,9 +656,16 @@ output {
 					<li class="fragment"><strong>Logs</strong> interessiert nur IT</li>
 					<li class="fragment"><strong>Bestellungen</strong> interessieren ALLE</li>
 					<li class="fragment">Realtime Analytics fasziniert</li>
-					<li class="fragment">Dashboards auf TFT</li>
 				</ul>
 
+				<aside class="notes" data-markdown>
+
+				</aside>
+			</section>
+			<section>
+				<h3>Dashboards auf TFT</h3>
+
+				<img src="tft.jpg" width="75%" />
 				<aside class="notes" data-markdown>
 
 				</aside>
@@ -764,8 +720,15 @@ output {
 			</section>
 
 			<section>
-			<h4>kibana dashboard</h4>
+				<h4>kibana dashboard</h4>
 				<img src="orders_dashboard.png">
+
+				<aside class="notes" data-markdown>
+				</aside>
+			</section>
+			<section>
+				<h4>kibana dashboard</h4>
+				<img src="dashboard_ratings2.png">
 
 				<aside class="notes" data-markdown>
 				</aside>
@@ -857,7 +820,7 @@ output {
 
 				</aside>
 			</section>
-			
+
 			</div>
 		</div>
 
