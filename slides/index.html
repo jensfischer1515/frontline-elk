@@ -164,6 +164,7 @@
 							<li>komplexer Logstash Filter</li>
 							<li>Full Re-Index zu jeder Stunde</li>
 						</ul>
+            <p>next: <strong>Timo</strong></p>
 					</aside>
 				</section>
 
@@ -294,6 +295,7 @@ echo "Hello Logstash" | ./bin/logstash -e 'input { stdin { } } output { stdout {
 				</script>
 				
 				<aside class="notes" data-markdown>
+          <p>next: <strong>Jens</strong></p>
 				</aside>
 			</section>
 			<section data-markdown>
@@ -493,8 +495,7 @@ Caused by: javax.el.PropertyNotFoundException: Property 'currentShipper' not fou
 				* Montag: logstash-indexer tot
 					* logs hängen mehrere Tage zurück
 					* del redis-key
-				* was tun damit es stabil wird:
-					* codecs
+        * next: <strong>Timo</strong>
 				</aside>
 			</section>
 			<section data-markdown>
@@ -569,8 +570,6 @@ Caused by: javax.el.PropertyNotFoundException: Property 'currentShipper' not fou
 					  </root>
 					</configuration>
 					```
-					* MDC fields (class, method, ...) <!-- .element: class="fragment" -->
-					* unique-request-id <!-- .element: class="fragment" -->
 				</script>
 
 				<aside class="notes" data-markdown>
@@ -645,9 +644,15 @@ output {
 }
 				</code></pre>
 				<aside class="notes" data-markdown>
+					- einheitliche Feldnamen
+					- unique-request-id
+					- MDC fields (class, method, ...)
+
 					- redis input
 					- es output
 					- kleine filter
+
+          - next: <strong>Jens</strong>
 				</aside>
 			</section>
 
@@ -823,7 +828,6 @@ output {
 
 					## Fragen?
 
-					Link zu Folien: ...
 				</script>
 
 				<aside class="notes" data-markdown>

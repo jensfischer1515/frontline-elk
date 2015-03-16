@@ -1,3 +1,11 @@
+### aufteilung
+
+1-6 JF
+7-13 TZ
+14-20 JF
+21-26 TZ
+27-34/35 JF
+
 ## 15/03/15 Skype
 
 * PDF Fallback: http://localhost:8000/?print-pdf#/
