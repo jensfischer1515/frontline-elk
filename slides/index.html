@@ -91,11 +91,12 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						<h2>Bug Fixing benötigt Log Zugriff</h2>
+						<h2>Bug Fixing</h2>
+						<h3>aber bitte mit Logs!</h3>
 						<ul>
-							<li class="fragment">ad hoc von Ops anfordern?</li>
-							<li class="fragment">Read-Only Shell Zugriff?</li>
-							<li class="fragment">Zeitgesteuert zu Devs kopieren?</li>
+							<li class="fragment">Shell Zugriff?</li>
+							<li class="fragment">ad hoc anfordern?</li>
+							<li class="fragment">cron rsync?</li>
 						</ul>
 
 						<img class="fragment" src="meh.png" height="300"/>
@@ -121,49 +122,50 @@
 					</aside>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Erste Schritte mit ELK
+				<section>
+					<h2>Erste Schritte mit ELK</h2>
 
+					<ul>
+						<li class="fragment">Q1 2013
+							<ul>
+								<li>Elasticsearch 0.90.x</li>
+								<li>Logstash 1.1.9</li>
+								<li>Kibana 2.x</li>
+							</ul>
+						</li>
+						<li class="fragment">Analyse ERP Latenz
+							<ul>
+								<li>Logfile Historie</li>
+								<li>CSV Export</li>
+							</ul>
+						</li>
+					</ul>
+
+					<aside class="notes">
+						Current versions:
 						<ul>
-							<li class="fragment">Q1 2013
-								<ul>
-									<li>Elasticsearch 0.90.x</li>
-									<li>Logstash 1.1.9</li>
-									<li>Kibana 2.x</li>
-								</ul>
-							</li>
-							<li class="fragment">Anforderung: ERP Latenz Analyse
-								<ul>
-									<li>Logfile Historie indizieren</li>
-									<li>CSV Export der Ergebnisse</li>
-								</ul>
-							</li>
-						</ul>
-					</script>
-
-					<aside class="notes" data-markdown>
-
+							<li>Elasticsearch 1.4.4</li>
+							<li>Logstash 1.4.2</li>
+							<li>Kibana 4.0.1</li>
+						</ul> 
 					</aside>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Schnell brauchbare Ergebnisse
+				<section>
+					<h2>Schnelle Ergebnisse</h2>
 
+					<ul>
+						<li class="fragment">Wenig Aufwand</li>
+						<li class="fragment">tolle Visualisierung</li>
+						<li class="fragment">Naive Herangehensweise</li>
+					</ul>
+
+					<aside class="notes">
+						Probleme:
 						<ul>
-							<li class="fragment">Wenig Aufwand, tolle Visualisierung</li>
-							<li class="fragment">Naive Herangehensweise:
-								<ul>
-									<li>komplexer Logstash Filter</li>
-									<li>Full Re-Index zu jeder Stunde</li>
-								</ul>
-							</li>
+							<li>komplexer Logstash Filter</li>
+							<li>Full Re-Index zu jeder Stunde</li>
 						</ul>
-
-					</script>
-
-					<aside class="notes" data-markdown>
 					</aside>
 				</section>
 
@@ -355,14 +357,13 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 				</aside>
 			</section>
 
-			<section data-markdown>
-				<script type="text/template">
-					## Live Demo:
+			<section>
+					<h2>Live Demo:</h2>
 
-					### NASA Access Logs (Juli 1995)
-				</script>
+					<h3>NASA <a href="http://localhost:5600/index.html#/dashboard/elasticsearch/NASA" target="_blank">Access Logs</a></h3>
 				
-				<aside class="notes" data-markdown>
+				<aside class="notes">
+					Juli 1995
 				</aside>
 			</section>
 
@@ -698,15 +699,16 @@ output {
 					- kleine filter
 				</aside>
 			</section>
-			<section data-markdown>
-				<script type="text/template">
-					## Akzeptanz im Unternehmen
 
-					* __Logs__ interessiert nur IT
-					* __Bestellungen__ interessieren Marketing, Einkauf, Management
-					* Realtime Analytics fasziniert
-					* Dashboards auf TFT in Büro
-				</script>
+			<section>
+				<h2>Akzeptanz im Unternehmen</h2>
+
+				<ul>
+					<li class="fragment"><strong>Logs</strong> interessiert nur IT</li>
+					<li class="fragment"><strong>Bestellungen</strong> interessieren ALLE</li>
+					<li class="fragment">Realtime Analytics fasziniert</li>
+					<li class="fragment">Dashboards auf TFT</li>
+				</ul>
 
 				<aside class="notes" data-markdown>
 
@@ -774,15 +776,15 @@ output {
 					<h2>Ausblick: Logfiles</h2>
 
 					<ul>
-						<li class="fragment">Doppelte Logfiles abbauen (<code>*.json</code> vs. <code>*.log</code>)</li>
-						<li class="fragment"><code>logrotate</code> bzw. RollingPolicy anpassen</li>
-						<li class="fragment">Anzahl verschiedener Logfiles reduzieren
+						<li class="fragment">Nur noch JSON</li>
+						<li class="fragment">kürzere RollingPolicy</li>
+						<li class="fragment">Weniger Logfiles
 							<ul>
-								<li><code>application.log</code> vs. <br><code>[order|paypal|billpay|diva|epoq|js|...].log</code></li>
-								<li>Differenzierung über <code>type</code></li>
+								<li><code>application.log</code> vs.</li>
+								<li><code>[order|paypal|billpay|diva|epoq|js|...].log</code></li>
 							</ul>
 						</li>
-						<li class="fragment">Weniger FS Locks durch [SiftingAppender](http://logback.qos.ch/manual/appenders.html#SiftingAppender) <small>(http://logback.qos.ch/manual/appenders.html#SiftingAppender)</small>
+						<li class="fragment">[SiftingAppender](http://logback.qos.ch/manual/appenders.html#SiftingAppender) <small>(http://logback.qos.ch/manual/appenders.html#SiftingAppender)</small>
 							<ul>
 								<li>ein Logfile pro Thread</li>
 							</ul>
@@ -801,15 +803,19 @@ output {
 					<h2>Ausblick: Elasticsearch</h2>
 
 					<ul>
-						<li class="fragment">Mehr als nur eine Node</li>						
-						<li class="fragment">Verwendung von [Index Template](http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html)</small>
+						<li class="fragment">Mehr Nodes</li>						
+						<li class="fragment">[Index Template](http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html)</small>
 							<ul>
-								<li><code>_all</code> Feld deaktivieren</li>
-								<li>Kompression aktivieren</li>
-								<li>Felder mit <code>not_analyzed</code> indizieren <br><small>(oder nur auf <code>*.raw</code> filtern)</small></li>
+								<li><Kein code>_all</code> Feld</li>
+								<li>Kompression</li>
+								<li><code>not_analyzed</code> indizieren <br><small>(oder <code>*.raw</code> nutzen)</small></li>
 							</ul>
 						</li>
-						<li class="fragment"><code>disk-based</code> statt <code>in-memory fielddata</code> mit [Doc Values](http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html)</smalll> </li>
+						<li class="fragment">[Doc Values](http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html)</smalll> 
+							<ul>
+								<li><code>disk-based</code> statt <code>in-memory fielddata</code></li>
+							</ul>
+						</li>
 					</ul>
 				</script>
 				
