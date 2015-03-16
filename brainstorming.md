@@ -1,11 +1,10 @@
 ## 15/03/15 Skype
 
 * PDF Fallback: http://localhost:8000/?print-pdf#/
-* (JF) Metriken: Cluster, Dokumente
 * (JF) Live Kibana (NASA access logs)
 * `echo "Hello Logstash" | ./bin/logstash -e 'input { stdin { } } output { stdout { codec => rubydebug } }'`
 * kibana-apache.png vor Kibana Live Demo
-* ePages ELK: 
+* (JF) Metriken: Cluster, Dokumente @ ePages ELK: 
   * 4x ES Nodes (je 96GB RAM, 1,8TB HDD)
   * 3,7Mrd Docs, 94 Indices, 5TB Index Size
   * 32GB/Tag Log Events, Retention Time 3 Monate

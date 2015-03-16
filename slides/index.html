@@ -253,18 +253,15 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 					</code></pre>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Live Demo:
+				<section>
+					<h2>Live Demo:</h2>
 
-						### Hello Logstash
-					</script>
+					<h3>Hello Logstash</h3>
+
+					<aside class="notes">
+echo "Hello Logstash" | ./bin/logstash -e 'input { stdin { } } output { stdout { codec => rubydebug } }
+					</aside>
 				</section> 
-				<aside class="notes" data-markdown>
-					live code
-				</aside>
-			</section>
-
 
 			<section data-markdown>
 				<script type="text/template">
@@ -370,6 +367,11 @@ echo "Hello Logstash" | ./bin/logstash -f simple.conf
 					Juli 1995
 				</aside>
 			</section>
+
+			<section>
+				<img src="kibana-apache.png" />
+			</section> 
+
 
 			<section data-markdown>
 				<!-- https://gist.github.com/edalquist/5467723#file-gistfile1-txt -->
@@ -795,6 +797,14 @@ output {
 						* daily snapshots
 						* daily cleanup
 					* [Curator](https://github.com/elastic/curator) <small>(github.com/elastic/curator)</small>
+
+					Note:
+
+						ePages: 
+						4x ES Nodes, (je 96GB RAM, 1.8TB HDD),
+						3.7Mrd Docs, 94 Indices,
+						5.0TB Index Size, 32GB/Tag Log Events
+						3 Monate Retention Time
 				</script>
 			</section>
 
