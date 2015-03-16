@@ -77,159 +77,152 @@
 				</section>
 
 				<section>
-					<section>
-						<h2>Motivation</h2>
+					<h2>Motivation</h2>
 
-						<img src="motivation.svg" />
-						<br>
+					<img src="motivation.svg" />
+					<br>
 
-						<div class="fragment">Ops @Novomind: Shell Zugriff</div>
-						<div class="fragment">Devs @Frontline: <strong>keinen</strong> Shell Zugriff</div>
+					<div class="fragment">Ops @Novomind: Shell Zugriff</div>
+					<div class="fragment">Devs @Frontline: <strong>keinen</strong> Shell Zugriff</div>
 
-						<aside class="notes" data-markdown>
-							test
-						</aside>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							<h2>Bug Fixing benötigt Log Zugriff</h2>
-							<ul>
-								<li class="fragment">ad hoc von Ops anfordern?</li>
-								<li class="fragment">Read-Only Shell Zugriff?</li>
-								<li class="fragment">Zeitgesteuert zu Devs kopieren?</li>
-							</ul>
+					<aside class="notes" data-markdown>
+						test
+					</aside>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						<h2>Bug Fixing benötigt Log Zugriff</h2>
+						<ul>
+							<li class="fragment">ad hoc von Ops anfordern?</li>
+							<li class="fragment">Read-Only Shell Zugriff?</li>
+							<li class="fragment">Zeitgesteuert zu Devs kopieren?</li>
+						</ul>
 
-							<img class="fragment" src="meh.png" height="300"/>
-						</script>
+						<img class="fragment" src="meh.png" height="300"/>
+					</script>
 
-						<aside class="notes" data-markdown>
-						</aside>
-					</section>
+					<aside class="notes" data-markdown>
+					</aside>
 				</section>
 
 				<section>
-					<section>
-						<h2>ELK</h2>
-						<ul class="fragment">
-							<li><strong>E</strong>lasticsearch</li>
-							<li><strong>L</strong>ogstash</li>
-							<li><strong>K</strong>ibana</li>
-						</ul>
-						<p class="fragment fade-in">
-							<img src="ELK-without-broker2.svg" width="60%">
-						</p>
-				</section>
+					<h2>ELK</h2>
+					<ul class="fragment">
+						<li><strong>E</strong>lasticsearch</li>
+						<li><strong>L</strong>ogstash</li>
+						<li><strong>K</strong>ibana</li>
+					</ul>
+					<p class="fragment fade-in">
+						<img src="ELK-without-broker2.svg" width="60%">
+					</p>
 					<aside class="notes" data-markdown>
 						* without broker
 						* with broker, entkopplung, queue, shipper performance
 					</aside>
 				</section>
 
-				<section>
-					<section data-markdown>
-						<script type="text/template">
-							## Erste Schritte mit ELK
+				<section data-markdown>
+					<script type="text/template">
+						## Erste Schritte mit ELK
 
-							<ul>
-								<li class="fragment">Q1 2013
-									<ul>
-										<li>Elasticsearch 0.90.x</li>
-										<li>Logstash 1.1.9</li>
-										<li>Kibana 2.x</li>
-									</ul>
-								</li>
-								<li class="fragment">Anforderung: ERP Latenz Analyse
-									<ul>
-										<li>Logfile Historie indizieren</li>
-										<li>CSV Export der Ergebnisse</li>
-									</ul>
-								</li>
-							</ul>
-						</script>
+						<ul>
+							<li class="fragment">Q1 2013
+								<ul>
+									<li>Elasticsearch 0.90.x</li>
+									<li>Logstash 1.1.9</li>
+									<li>Kibana 2.x</li>
+								</ul>
+							</li>
+							<li class="fragment">Anforderung: ERP Latenz Analyse
+								<ul>
+									<li>Logfile Historie indizieren</li>
+									<li>CSV Export der Ergebnisse</li>
+								</ul>
+							</li>
+						</ul>
+					</script>
 
-						<aside class="notes" data-markdown>
+					<aside class="notes" data-markdown>
 
-						</aside>
-					</section>
+					</aside>
+				</section>
 
-					<section data-markdown>
-						<script type="text/template">
-							## Schnell brauchbare Ergebnisse
+				<section data-markdown>
+					<script type="text/template">
+						## Schnell brauchbare Ergebnisse
 
-							<ul>
-								<li class="fragment">Wenig Aufwand, tolle Visualisierung</li>
-								<li class="fragment">Naive Herangehensweise:
-									<ul>
-										<li>komplexer Logstash Filter</li>
-										<li>Full Re-Index zu jeder Stunde</li>
-									</ul>
-								</li>
-							</ul>
+						<ul>
+							<li class="fragment">Wenig Aufwand, tolle Visualisierung</li>
+							<li class="fragment">Naive Herangehensweise:
+								<ul>
+									<li>komplexer Logstash Filter</li>
+									<li>Full Re-Index zu jeder Stunde</li>
+								</ul>
+							</li>
+						</ul>
 
-						</script>
+					</script>
 
-						<aside class="notes" data-markdown>
-						</aside>
-					</section>
+					<aside class="notes" data-markdown>
+					</aside>
 				</section>
 
 				<section>
-					<section>
-						<h2>Logstash</h2>
-							<img src="logstash-logo.png" style="height: 20vh" />
-							<br>
-							<img class="fragment" src="Logstash.svg" style="flex:1;" />
-							<!-- roll-in effekt kills speaker notes -->
-					</section>
-					<section>
-						<h2>Logstash plugins</h2>
-						<div style="display: flex;">
-							<div class="fragment" style="flex:1;">
-								<h3 style="">input</h3>
-								<ul >
-									<li>file</li>
-									<li>redis</li>
-									<li>stdin</li>
-									<li>syslog</li>
-									<li>heroku</li>
-									<li>...</li>
-								</ul>
-							</div>
-							<div class="fragment" style="flex:1;">
-								<h3 style="">filter</h3>
-								<ul >
-									<li>grok</li>
-									<li>multiline</li>
-									<li>geoip</li>
-									<li>useragent</li>
-									<li>csv</li>
-									<li>...</li>
-								</ul>
-							</div>
-							<div class="fragment" style="flex:1;">
-								<h3 style="">output</h3>
-								<ul >
-									<li>elasticsearch</li>
-									<li>redis</li>
-									<li>statsd</li>
-									<li>graphite</li>
-									<li>irc</li>
-									<li>...</li>
-								</ul>
-							</div>
-						</div>
+					<h2>Logstash</h2>
+						<img src="logstash-logo.png" style="height: 20vh" />
 						<br>
-						<div class="fragment">
-							<a href="http://logstash.net/docs/1.4.2/">logstash plugin documentation</a> <small>(logstash.net/docs/1.4.2)</small>
-							<br>
-							<a href="https://github.com/logstash-plugins">community plugins</a> <small>(github.com/logstash-plugins)</small>
+						<img class="fragment" src="Logstash.svg" style="flex:1;" />
+						<!-- roll-in effekt kills speaker notes -->
+				</section>
+				<section>
+					<h2>Logstash plugins</h2>
+					<div style="display: flex;">
+						<div class="fragment" style="flex:1;">
+							<h3 style="">input</h3>
+							<ul >
+								<li>file</li>
+								<li>redis</li>
+								<li>stdin</li>
+								<li>syslog</li>
+								<li>heroku</li>
+								<li>...</li>
+							</ul>
 						</div>
-					</section>
+						<div class="fragment" style="flex:1;">
+							<h3 style="">filter</h3>
+							<ul >
+								<li>grok</li>
+								<li>multiline</li>
+								<li>geoip</li>
+								<li>useragent</li>
+								<li>csv</li>
+								<li>...</li>
+							</ul>
+						</div>
+						<div class="fragment" style="flex:1;">
+							<h3 style="">output</h3>
+							<ul >
+								<li>elasticsearch</li>
+								<li>redis</li>
+								<li>statsd</li>
+								<li>graphite</li>
+								<li>irc</li>
+								<li>...</li>
+							</ul>
+						</div>
+					</div>
+					<br>
+					<div class="fragment">
+						<a href="http://logstash.net/docs/1.4.2/">logstash plugin documentation</a> <small>(logstash.net/docs/1.4.2)</small>
+						<br>
+						<a href="https://github.com/logstash-plugins">community plugins</a> <small>(github.com/logstash-plugins)</small>
+					</div>
+				</section>
 
 					
-					<section>
-						<h3>logstash config</h3>
-						<pre><code data-trim>
+				<section>
+					<h3>logstash config</h3>
+					<pre><code data-trim>
 # simple.conf
 input { 
     stdin {
@@ -240,169 +233,145 @@ output {
         codec => rubydebug 
     } 
 }
-						</code></pre>
-						<pre class="fragment"><code data-trim>
+					</code></pre>
+					<pre class="fragment"><code data-trim>
 echo "Hello Logstash" | ./bin/logstash -f simple.conf
-						</code></pre>
-						<pre class="fragment"><code data-trim>
+					</code></pre>
+					<pre class="fragment"><code data-trim>
 {
        "message" => "Hello Logstash",
       "@version" => "1",
     "@timestamp" => "2015-03-15T10:00:42.149Z",
           "host" => "jfischer-mac"
 }
-						</code></pre>
-					</section>
-
-					<section data-markdown>
-						<script type="text/template">
-							## Live Demo:
-
-							### Hello Logstash
-						</script>
-					</section> 
-					<aside class="notes" data-markdown>
-						live code
-					</aside>
+					</code></pre>
 				</section>
 
+				<section data-markdown>
+					<script type="text/template">
+						## Live Demo:
 
-					<section data-markdown>
-						<script type="text/template">
-							## Live Logs
-								
-							* viele Log-Dateien
-							* unstrukturiert
+						### Hello Logstash
+					</script>
+				</section> 
+				<aside class="notes" data-markdown>
+					live code
+				</aside>
+			</section>
 
-							 Note:
-							  - nächste Schritte Live Logs
-							  - in Echtzeit?
-							  - Redis Broker
-						</script>
-					</section> 
-	 				<section>
-						<h3>ELK mit broker</h3>
-						<img src="ELK-with-broker.svg" width="75%">
-					</section>
-				</section>
 
+			<section data-markdown>
+				<script type="text/template">
+					## Live Logs
+						
+					* viele Log-Dateien
+					* unstrukturiert
+
+					 Note:
+					  - nächste Schritte Live Logs
+					  - in Echtzeit?
+					  - Redis Broker
+				</script>
+			</section> 
 				<section>
-				<!--
-					<section data-markdown>
-						<script type="text/template">
-							## Life of a Log Event
+				<h3>ELK mit broker</h3>
+				<img src="ELK-with-broker.svg" width="75%">
+			</section>
 
-							 * create (apache access log, java logback)
-							 * transport (logstash push to redis)
-							 * analyze/filter/store? (logstash pop from redis, filter log event and push to elasticsearch)
-							 * backup (daily index, ES snapshots with curator)
-							 * delete (clear old snapshots, clear old indcies with curator)
-						</script>
-						
-						<aside class="notes" data-markdown>
+			<section data-markdown>
+				<script type="text/template">
+					## Filter
 
-						</aside>
-					</section>
-				-->
+					* file-input liefert ein Event pro Zeile
+					* Log-Event mit Regex parsen
+						* grok
+						* multiline
 
+					* strukturiert in ES speichern
+				</script>
+				
+				<aside class="notes" data-markdown>
+				</aside>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					## apache
+					
+					```
+					127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] "GET /xampp/status.php HTTP/1.1" 200 3891 "http://cadenza/xampp/navi.php" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0"
+					```
+					```
+					input { stdin { } }
 
-					<section data-markdown>
-						<script type="text/template">
-							## Filter
+					filter {
+						grok {
+							match => { "message" => "%{COMBINEDAPACHELOG}" }
+						}
+						date {
+							match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+						}
+					}
 
-							* file-input liefert ein Event pro Zeile
-							* Log-Event mit Regex parsen
-								* grok
-								* multiline
+					output {
+						elasticsearch { host => localhost }
+						stdout { codec => rubydebug }
+					}
+					```
+				</script>
+				<aside class="notes" data-markdown>
+					one line -> one Log-Event
+					maintained patterns
+				</aside>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					```
+					{
+						"message" => "127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] \"GET /xampp/status.php HTTP/1.1\" 200 3891 \"http://cadenza/xampp/navi.php\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0\"",
+						"@timestamp" => "2013-12-11T08:01:45.000Z",
+						"@version" => "1",
+						"host" => "cadenza",
+						"clientip" => "127.0.0.1",
+						"ident" => "-",
+						"auth" => "-",
+						"timestamp" => "11/Dec/2013:00:01:45 -0800",
+						"verb" => "GET",
+						"request" => "/xampp/status.php",
+						"httpversion" => "1.1",
+						"response" => "200",
+						"bytes" => "3891",
+						"referrer" => "\"http://cadenza/xampp/navi.php\"",
+						"agent" => "\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0\""
+					}
+					```
+					 [patterns](https://github.com/elastic/logstash/tree/v1.4.2/patterns) <small>(github.com/elastic/logstash/tree/v1.4.2/patterns)</small>
+				</script>
 
-							* strukturiert in ES speichern
-						</script>
-						
-						<aside class="notes" data-markdown>
-						</aside>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							## apache
-							
-							```
-							127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] "GET /xampp/status.php HTTP/1.1" 200 3891 "http://cadenza/xampp/navi.php" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0"
-							```
-							```
-							input { stdin { } }
+				<aside class="notes" data-markdown>
+				LIVE DEMO
+					* wir kennen App Log format
+					* -> parsen
+					* aber was ist hiermit? -> next slide
+				</aside>
+			</section>
 
-							filter {
-								grok {
-									match => { "message" => "%{COMBINEDAPACHELOG}" }
-								}
-								date {
-									match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
-								}
-							}
+			<section data-markdown>
+				<script type="text/template">
+					## Live Demo:
 
-							output {
-								elasticsearch { host => localhost }
-								stdout { codec => rubydebug }
-							}
-							```
-						</script>
-						<aside class="notes" data-markdown>
-							one line -> one Log-Event
-							maintained patterns
-						</aside>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							```
-							{
-								"message" => "127.0.0.1 - - [11/Dec/2013:00:01:45 -0800] \"GET /xampp/status.php HTTP/1.1\" 200 3891 \"http://cadenza/xampp/navi.php\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0\"",
-								"@timestamp" => "2013-12-11T08:01:45.000Z",
-								"@version" => "1",
-								"host" => "cadenza",
-								"clientip" => "127.0.0.1",
-								"ident" => "-",
-								"auth" => "-",
-								"timestamp" => "11/Dec/2013:00:01:45 -0800",
-								"verb" => "GET",
-								"request" => "/xampp/status.php",
-								"httpversion" => "1.1",
-								"response" => "200",
-								"bytes" => "3891",
-								"referrer" => "\"http://cadenza/xampp/navi.php\"",
-								"agent" => "\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:25.0) Gecko/20100101 Firefox/25.0\""
-							}
-							```
-							 [patterns](https://github.com/elastic/logstash/tree/v1.4.2/patterns) <small>(github.com/elastic/logstash/tree/v1.4.2/patterns)</small>
-						</script>
+					### NASA Access Logs (Juli 1995)
+				</script>
+				
+				<aside class="notes" data-markdown>
+				</aside>
+			</section>
 
-						<aside class="notes" data-markdown>
-						LIVE DEMO
-							* wir kennen App Log format
-							* -> parsen
-							* aber was ist hiermit? -> next slide
-						</aside>
-					</section>
-
-					<section data-markdown>
-						<script type="text/template">
-							## Live Demo:
-
-							### NASA Access Logs (Juli 1995)
-						</script>
-						
-						<aside class="notes" data-markdown>
-						</aside>
-					</section>
-
-				</section>
-
-				<section>
-					<section data-markdown>
-						<!-- https://gist.github.com/edalquist/5467723#file-gistfile1-txt -->
-						<script type="text/template">
-							## STACKTRACE
-							
-							```
+			<section data-markdown>
+				<!-- https://gist.github.com/edalquist/5467723#file-gistfile1-txt -->
+				<script type="text/template">
+					## STACKTRACE
+					
+					```
 ERROR [TP-Processor87] o.j.p.web.ExceptionLoggingFilter 2013-04-26 09:25:25,923 - Request processing failed; nested exception is java.lang.NullPointerException
 org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:894) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
@@ -506,164 +475,160 @@ Caused by: java.lang.NullPointerException: null
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882) ~[spring-webmvc-3.1.4.RELEASE.jar:3.1.4.RELEASE]
 	... 72 common frames omitted
-							```
-							**multiline & grok filter!** <!-- .element: class="fragment" -->
+					```
+					**multiline & grok filter!** <!-- .element: class="fragment" -->
 
-							Note:
-							- also was haben wir gemacht?
-							- multiline filter
-						</script>
-						<aside class="notes" data-markdown>
-							
-						</aside>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							```
-							filter {
-								multiline {
-									... TODO	
-								}
-								grok {
-									match => { "message" => "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)" }
-								}
-								date {
-									match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
-								}
-							}
-							```
-
-							Note:
-								- funktionierte erstmal ganz gut
-						</script>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>probleme</h2>
-						<div style="display: flex;">
-							<div class="fragment" style="flex:1;">
-								<h4 style="">grok</h4>
-								<ul>
-									<li>komplexe Regex</li>
-									<li>performance</li>
-								</ul>
-							</div>
-							<div class="fragment" style="flex:1;">
-								<h4 style="">multiline</h4>
-								<ul>
-									<li>multithreading</li>
-									<li>performance</li>
-								</ul>
-							</div>
-						</div>
-						<br>
-						<div class="fragment">
-							<ul>
-								<li>logstash-indexer stirbt</li>
-								<li>Echtzeit geht verloren</li>
-								<li>Logs gehen verloren</li>
-							</ul>
-						</div>
-						<!-- [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small> -->
-						<aside class="notes" data-markdown>
-						* shipper:
-							* keine Filter
-							* pro Zeile ein Event
-							* kennt kein Format
-						* skalierte aber überhaupt nicht mehr
-						* Montag: logstash-indexer tot
-							* logs hängen mehrere Tage zurück
-							* del redis-key
-						* was tun damit es stabil wird:
-							* codecs
-						</aside>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							# codecs
-							## JSON?  <!-- .element: class="fragment" -->
-
-							Note:
-							- Logge für Logstash?
-							- ES output? JSON?
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							# JSON
-							* strukturiert <!-- .element: class="fragment" -->
-							* typisiert <!-- .element: class="fragment" -->
-
-							Note:
-							- JSON Format
-							- keine Filter
-							- eine Zeile pro Event
-							- JSON Codec im Shipper & Indexer
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							## [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
-
-
-							```
-							LogFormat "{}" TODO
-							```
-
-							Note:
-							- JSON Format
-							- keine Filter
-							- eine Zeile pro Event
-							- JSON Codec im Shipper & Indexer
-						</script>
-					</section>
-
-					<section data-markdown>
-						<script type="text/template">
-							## [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
-
-							```
-							<configuration>
-							  <appender name="ISHOP" class="FileAppender">
-							    <file>${catalina.base}/logs/ishop.log</file>
-							    <layout class="PatternLayout">
-							      <pattern>
-							      	%-28(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread]) 
-							      	[#:%exHash] [%X{sessionid}@%X{ipaddr}] 
-							      	[%X{rnd}/%X{username}] %-5level 
-							      	%marker %c - %m%n
-							      </pattern>
-							    </layout>
-							  </appender>
-
-							  <appender name="ISHOP_LOGSTASH" class="FileAppender">
-							    <file>${catalina.base}/logs/ishop.json</file>
-							    <encoder class="LogstashEncoder" />
-							  </appender>
-
-							  <root>
-							    <level value="INFO" />
-							    <appender-ref ref="ISHOP" />
-							    <appender-ref ref="ISHOP_LOGSTASH" />
-							  </root>
-							</configuration>
-							```
-							* MDC fields (class, method, ...) <!-- .element: class="fragment" -->
-							* unique-request-id <!-- .element: class="fragment" -->
-						</script>
-
-						<aside class="notes" data-markdown>
-
-						</aside>
-					</section>
+					Note:
+					- also was haben wir gemacht?
+					- multiline filter
+				</script>
+				<aside class="notes" data-markdown>
 					
-				</section>
-				<section>
-					<section>
-						<h3>Logstash Shipper @ Frontline</h3>
-						<pre><code data-trim>
+				</aside>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					```
+					filter {
+						multiline {
+							... TODO	
+						}
+						grok {
+							match => { "message" => "%{TIME:timestamp} \[%{DATA:thread}\] \[\#:(?:%{DATA:exHash})\] \[(?:%{DATA:sessionid})@(?:%{IPV4:ip}?)\] \[(?:%{DATA:rnd})\/(?:%{DATA:username})\] %{LOGLEVEL:level}\s*%{JAVACLASS:marker} - (?<logmessage>(?:.|\n\t)*)" }
+						}
+						date {
+							match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+						}
+					}
+					```
+
+					Note:
+						- funktionierte erstmal ganz gut
+				</script>
+			</section>
+
+			<section>
+				<h2>probleme</h2>
+				<div style="display: flex;">
+					<div class="fragment" style="flex:1;">
+						<h4 style="">grok</h4>
+						<ul>
+							<li>komplexe Regex</li>
+							<li>performance</li>
+						</ul>
+					</div>
+					<div class="fragment" style="flex:1;">
+						<h4 style="">multiline</h4>
+						<ul>
+							<li>multithreading</li>
+							<li>performance</li>
+						</ul>
+					</div>
+				</div>
+				<br>
+				<div class="fragment">
+					<ul>
+						<li>logstash-indexer stirbt</li>
+						<li>Echtzeit geht verloren</li>
+						<li>Logs gehen verloren</li>
+					</ul>
+				</div>
+				<!-- [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small> -->
+				<aside class="notes" data-markdown>
+				* shipper:
+					* keine Filter
+					* pro Zeile ein Event
+					* kennt kein Format
+				* skalierte aber überhaupt nicht mehr
+				* Montag: logstash-indexer tot
+					* logs hängen mehrere Tage zurück
+					* del redis-key
+				* was tun damit es stabil wird:
+					* codecs
+				</aside>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					# codecs
+					## JSON?  <!-- .element: class="fragment" -->
+
+					Note:
+					- Logge für Logstash?
+					- ES output? JSON?
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					# JSON
+					* strukturiert <!-- .element: class="fragment" -->
+					* typisiert <!-- .element: class="fragment" -->
+
+					Note:
+					- JSON Format
+					- keine Filter
+					- eine Zeile pro Event
+					- JSON Codec im Shipper & Indexer
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					## [Apache LogFormat](http://httpd.apache.org/docs/2.4/mod/mod_log_config.html#logformat)
+
+
+					```
+					LogFormat "{}" TODO
+					```
+
+					Note:
+					- JSON Format
+					- keine Filter
+					- eine Zeile pro Event
+					- JSON Codec im Shipper & Indexer
+				</script>
+			</section>
+
+			<section data-markdown>
+				<script type="text/template">
+					## [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder)
+
+					```
+					<configuration>
+					  <appender name="ISHOP" class="FileAppender">
+					    <file>${catalina.base}/logs/ishop.log</file>
+					    <layout class="PatternLayout">
+					      <pattern>
+					      	%-28(%d{"yyyy-MM-dd'T'HH:mm:ss,SSS"} [%thread]) 
+					      	[#:%exHash] [%X{sessionid}@%X{ipaddr}] 
+					      	[%X{rnd}/%X{username}] %-5level 
+					      	%marker %c - %m%n
+					      </pattern>
+					    </layout>
+					  </appender>
+
+					  <appender name="ISHOP_LOGSTASH" class="FileAppender">
+					    <file>${catalina.base}/logs/ishop.json</file>
+					    <encoder class="LogstashEncoder" />
+					  </appender>
+
+					  <root>
+					    <level value="INFO" />
+					    <appender-ref ref="ISHOP" />
+					    <appender-ref ref="ISHOP_LOGSTASH" />
+					  </root>
+					</configuration>
+					```
+					* MDC fields (class, method, ...) <!-- .element: class="fragment" -->
+					* unique-request-id <!-- .element: class="fragment" -->
+				</script>
+
+				<aside class="notes" data-markdown>
+
+				</aside>
+			</section>
+					
+			<section>
+				<h3>Logstash Shipper @ Frontline</h3>
+				<pre><code data-trim>
 input {
   file {
     path => "/var/logs/ishop_logstash.log"
@@ -671,8 +636,8 @@ input {
     codec => "json"
   }
 }
-						</code></pre>
-						<pre class="fragment"><code data-trim>
+				</code></pre>
+				<pre class="fragment"><code data-trim>
 output {
   if [type] == "ishop_logstash" {
     redis { 
@@ -682,22 +647,22 @@ output {
     }
   }
 }
-						</code></pre>
-						<p class="fragment">keine Filter im Shipper</p>
+				</code></pre>
+				<p class="fragment">keine Filter im Shipper</p>
 
-						<aside class="notes" data-markdown>
-							- IST Zustand
-							- file input
-							- redis output
-							- **keine** filter
-						</aside>
-					</section>
+				<aside class="notes" data-markdown>
+					- IST Zustand
+					- file input
+					- redis output
+					- **keine** filter
+				</aside>
+			</section>
 
 
-					<section>
-						<h3>Logstash Indexer @ Frontline</h3>
-						
-						<pre><code data-trim>
+			<section>
+				<h3>Logstash Indexer @ Frontline</h3>
+				
+				<pre><code data-trim>
 input {							
   redis {
     host => "redis"
@@ -708,8 +673,8 @@ input {
     add_field => { "source_host" => "live" }
   }
 }
-						</code></pre>
-						<pre class="fragment"><code data-trim>
+				</code></pre>
+				<pre class="fragment"><code data-trim>
 filter {
   if [source_host] == "live" and [type] == "ishop_logstash" {
     mutate {
@@ -717,8 +682,8 @@ filter {
     }
   }
 }
-						</code></pre>
-						<pre class="fragment"><code data-trim>
+				</code></pre>
+				<pre class="fragment"><code data-trim>
 output {
   if [source_host] == "live" {
     elasticsearch_http {
@@ -726,170 +691,167 @@ output {
     }
   }
 }
-						</code></pre>
-						<aside class="notes" data-markdown>
-							- redis input
-							- es output
-							- kleine filter
-						</aside>
-					</section>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Akzeptanz im Unternehmen
+				</code></pre>
+				<aside class="notes" data-markdown>
+					- redis input
+					- es output
+					- kleine filter
+				</aside>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					## Akzeptanz im Unternehmen
 
-						* __Logs__ interessiert nur IT
-						* __Bestellungen__ interessieren Marketing, Einkauf, Management
-						* Realtime Analytics fasziniert
-						* Dashboards auf TFT in Büro
-					</script>
+					* __Logs__ interessiert nur IT
+					* __Bestellungen__ interessieren Marketing, Einkauf, Management
+					* Realtime Analytics fasziniert
+					* Dashboards auf TFT in Büro
+				</script>
 
-					<aside class="notes" data-markdown>
+				<aside class="notes" data-markdown>
 
-					</aside>
-				</section>
+				</aside>
+			</section>
 
-				<section>
-					<section data-markdown>
-						<script type="text/template">
-							### inhaltliches logging
-							```
-							class OrderData {
-								List<LineItem> lineItems;
-								Money totalAmount;
-								PaymentType paymentType;
-								ShipperType shipperType; 
-							}
-							 ```
-							```
-							Logger.info(Markers.append("order", orderData), "order success");
-							```
-						</script>
+			<section data-markdown>
+				<script type="text/template">
+					### inhaltliches logging
+					```
+					class OrderData {
+						List<LineItem> lineItems;
+						Money totalAmount;
+						PaymentType paymentType;
+						ShipperType shipperType; 
+					}
+					 ```
+					```
+					Logger.info(Markers.append("order", orderData), "order success");
+					```
+				</script>
 
-						<aside class="notes" data-markdown>
-							- Wie kann man ELK für nicht tech. Daten nutzen?
-							- Beim Entwickeln an den Log-Payload denken
-						</aside>
-					</section>
+				<aside class="notes" data-markdown>
+					- Wie kann man ELK für nicht tech. Daten nutzen?
+					- Beim Entwickeln an den Log-Payload denken
+				</aside>
+			</section>
 
 
-					<section data-markdown>
-						<script type="text/template">
-							#### logstash output
-							
-							```
-							{
-								"message": "order success",
-								"@version": "1",
-								"@timestamp": "2015-03-10T13:53:25.775Z",
-								"host": "work",
-								"order": {
-									"lineItems": [{}, {}, ...],
-									"totalAmount": 23.55,
-									"paymentType": "PAYPAL",
-									"shipperType": "DHL"
-								}
-							}
-							```
-						</script>
-
-						<aside class="notes" data-markdown>
-
-						</aside>
-					</section>
-
-					<section>
-					<h4>kibana dashboard</h4>
-						<img src="orders_dashboard.png">
-
-						<aside class="notes" data-markdown>
-						</aside>
-					</section>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						<h2>Ausblick: Logfiles</h2>
-
-						<ul>
-							<li class="fragment">Doppelte Logfiles abbauen (<code>*.json</code> vs. <code>*.log</code>)</li>
-							<li class="fragment"><code>logrotate</code> bzw. RollingPolicy anpassen</li>
-							<li class="fragment">Anzahl verschiedener Logfiles reduzieren
-								<ul>
-									<li><code>application.log</code> vs. <br><code>[order|paypal|billpay|diva|epoq|js|...].log</code></li>
-									<li>Differenzierung über <code>type</code></li>
-								</ul>
-							</li>
-							<li class="fragment">Weniger FS Locks durch [SiftingAppender](http://logback.qos.ch/manual/appenders.html#SiftingAppender) <small>(http://logback.qos.ch/manual/appenders.html#SiftingAppender)</small>
-								<ul>
-									<li>ein Logfile pro Thread</li>
-								</ul>
-							</li>
-							<li class="fragment">LMAX Disruptor RingBuffer mit [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
-						</ul>
-					</script>
+			<section data-markdown>
+				<script type="text/template">
+					#### logstash output
 					
-					<aside class="notes" data-markdown>
+					```
+					{
+						"message": "order success",
+						"@version": "1",
+						"@timestamp": "2015-03-10T13:53:25.775Z",
+						"host": "work",
+						"order": {
+							"lineItems": [{}, {}, ...],
+							"totalAmount": 23.55,
+							"paymentType": "PAYPAL",
+							"shipperType": "DHL"
+						}
+					}
+					```
+				</script>
 
-					</aside>
-				</section>
+				<aside class="notes" data-markdown>
 
-				<section data-markdown>
-					<script type="text/template">
-						<h2>Ausblick: Elasticsearch</h2>
+				</aside>
+			</section>
 
-						<ul>
-							<li class="fragment">Mehr als nur eine Node</li>						
-							<li class="fragment">Verwendung von [Index Template](http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html)</small>
-								<ul>
-									<li><code>_all</code> Feld deaktivieren</li>
-									<li>Kompression aktivieren</li>
-									<li>Felder mit <code>not_analyzed</code> indizieren <br><small>(oder nur auf <code>*.raw</code> filtern)</small></li>
-								</ul>
-							</li>
-							<li class="fragment"><code>disk-based</code> statt <code>in-memory fielddata</code> mit [Doc Values](http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html)</smalll> </li>
-						</ul>
-					</script>
-					
-					<aside class="notes" data-markdown>
+			<section>
+			<h4>kibana dashboard</h4>
+				<img src="orders_dashboard.png">
 
-					</aside>
-				</section>
+				<aside class="notes" data-markdown>
+				</aside>
+			</section>
 
+			<section data-markdown>
+				<script type="text/template">
+					<h2>Ausblick: Logfiles</h2>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Logvolumen
-						* 45 Tage im ES
-							* daily index
-							* daily snapshots
-							* daily cleanup
-						* [Curator](https://github.com/elastic/curator) <small>(github.com/elastic/curator)</small>
-					</script>
-				</section>
+					<ul>
+						<li class="fragment">Doppelte Logfiles abbauen (<code>*.json</code> vs. <code>*.log</code>)</li>
+						<li class="fragment"><code>logrotate</code> bzw. RollingPolicy anpassen</li>
+						<li class="fragment">Anzahl verschiedener Logfiles reduzieren
+							<ul>
+								<li><code>application.log</code> vs. <br><code>[order|paypal|billpay|diva|epoq|js|...].log</code></li>
+								<li>Differenzierung über <code>type</code></li>
+							</ul>
+						</li>
+						<li class="fragment">Weniger FS Locks durch [SiftingAppender](http://logback.qos.ch/manual/appenders.html#SiftingAppender) <small>(http://logback.qos.ch/manual/appenders.html#SiftingAppender)</small>
+							<ul>
+								<li>ein Logfile pro Thread</li>
+							</ul>
+						</li>
+						<li class="fragment">LMAX Disruptor RingBuffer mit [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
+					</ul>
+				</script>
+				
+				<aside class="notes" data-markdown>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Staging ELK
-						* neue Konfigurationen testen
-						* Jede Komponente leicht skalierbar
-							* docker?
-					</script>
-				</section>
+				</aside>
+			</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						# Vielen Dank
+			<section data-markdown>
+				<script type="text/template">
+					<h2>Ausblick: Elasticsearch</h2>
 
-						## Fragen?
+					<ul>
+						<li class="fragment">Mehr als nur eine Node</li>						
+						<li class="fragment">Verwendung von [Index Template](http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html)</small>
+							<ul>
+								<li><code>_all</code> Feld deaktivieren</li>
+								<li>Kompression aktivieren</li>
+								<li>Felder mit <code>not_analyzed</code> indizieren <br><small>(oder nur auf <code>*.raw</code> filtern)</small></li>
+							</ul>
+						</li>
+						<li class="fragment"><code>disk-based</code> statt <code>in-memory fielddata</code> mit [Doc Values](http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html)</smalll> </li>
+					</ul>
+				</script>
+				
+				<aside class="notes" data-markdown>
 
-						Link zu Folien: ...
-					</script>
+				</aside>
+			</section>
 
-					<aside class="notes" data-markdown>
+			<section data-markdown>
+				<script type="text/template">
+					## Logvolumen
+					* 45 Tage im ES
+						* daily index
+						* daily snapshots
+						* daily cleanup
+					* [Curator](https://github.com/elastic/curator) <small>(github.com/elastic/curator)</small>
+				</script>
+			</section>
 
-					</aside>
-				</section>
+			<section data-markdown>
+				<script type="text/template">
+					## Staging ELK
+					* neue Konfigurationen testen
+					* Jede Komponente leicht skalierbar
+						* docker?
+				</script>
+			</section>
+
+			<section data-markdown>
+				<script type="text/template">
+					# Vielen Dank
+
+					## Fragen?
+
+					Link zu Folien: ...
+				</script>
+
+				<aside class="notes" data-markdown>
+
+				</aside>
+			</section>
+			
 			</div>
 		</div>
 
