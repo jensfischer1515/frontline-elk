@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>ELK-Stack bei Frontline</title>
+		<title>ELK-Stack @ Frontline</title>
 
 		<meta name="description" content="Search Technology Meetup Hamburg">
 		<meta name="author" content="Jens Fischer, Timo Zingel">
@@ -50,8 +50,8 @@
 			<div class="slides">
 				<section data-markdown>
 					<script type="text/template">
-						# ELK-Stack bei Frontline
-						### Erfahrungen aus zwei Jahren produktivem Einsatz
+						# ELK-Stack @ Frontline
+						### Experiences from two years of production usage
 						
 						Timo Zingel / [@pyspam](http://twitter.com/pyspam)
 
@@ -63,12 +63,12 @@
 					<script type="text/template">
 						<img width="50%" src="frontline.svg" />
 
-						* Onlineshop für Streetfashion
-							* 1986 als Musik-Mailorder gegründet
+						* Onlineshop for Streetfashion
+							* 1986 founded as music mailorder
 							* 1996 Streetfashion: *www.ziehdichan.de*
 							* 2004 *www.frontlineshop.com*
-						* ca. 80 Mitarbeiter
-						* Scrum Team mit 6 Entwicklern
+						* ca. 80 employees
+						* Scrum Team of 6 developers
 
 						Note:
 							test
@@ -81,8 +81,8 @@
 					<img src="motivation.svg" />
 					<br>
 
-					<div class="fragment">Ops @Novomind: Shell Zugriff</div>
-					<div class="fragment">Devs @Frontline: <strong>keinen</strong> Shell Zugriff</div>
+					<div class="fragment">Ops @Novomind: shell access</div>
+					<div class="fragment">Devs @Frontline: <strong>no</strong> shell access</div>
 
 					<aside class="notes" data-markdown>
 						test
@@ -91,10 +91,10 @@
 				<section data-markdown>
 					<script type="text/template">
 						<h2>Bug Fixing</h2>
-						<h3>aber bitte mit Logs!</h3>
+						<h3>but with logs, please!</h3>
 						<ul>
-							<li class="fragment">Shell Zugriff?</li>
-							<li class="fragment">ad hoc anfordern?</li>
+							<li class="fragment">shell access?</li>
+							<li class="fragment">request ad hoc?</li>
 							<li class="fragment">cron rsync?</li>
 						</ul>
 
@@ -121,7 +121,7 @@
 				</section>
 
 				<section>
-					<h2>Erste Schritte</h2>
+					<h2>First Steps</h2>
 
 					<ul>
 						<li class="fragment">Q1 2013
@@ -131,10 +131,10 @@
 								<li>Kibana 2.x</li>
 							</ul>
 						</li>
-						<li class="fragment">Analyse ERP Latenz
+						<li class="fragment">Analyse ERP latency
 							<ul>
-								<li>Logfile Historie</li>
-								<li>CSV Export</li>
+								<li>Logfile history</li>
+								<li>CSV export</li>
 							</ul>
 						</li>
 					</ul>
@@ -150,12 +150,12 @@
 				</section>
 
 				<section>
-					<h2>Schnelle Ergebnisse</h2>
+					<h2>Quick results</h2>
 
 					<ul>
-						<li class="fragment">Wenig Aufwand</li>
-						<li class="fragment">tolle Visualisierung</li>
-						<li class="fragment">Naive Herangehensweise</li>
+						<li class="fragment">minimal effort</li>
+						<li class="fragment">great visualization</li>
+						<li class="fragment">naive approach</li>
 					</ul>
 
 					<aside class="notes">
@@ -268,8 +268,8 @@ echo "Hello Logstash" | ./bin/logstash -e 'input { stdin { } } output { stdout {
 				<script type="text/template">
 					## Live Logs
 						
-					* viele Log-Dateien
-					* unstrukturiert
+					* many log files
+					* unstructured
 
 					 Note:
 					  - nächste Schritte Live Logs
@@ -278,7 +278,7 @@ echo "Hello Logstash" | ./bin/logstash -e 'input { stdin { } } output { stdout {
 				</script>
 			</section> 
 				<section>
-				<h3>ELK mit broker</h3>
+				<h3>ELK with broker</h3>
 				<img src="ELK-with-broker.svg" width="75%">
 			</section>
 
@@ -286,12 +286,12 @@ echo "Hello Logstash" | ./bin/logstash -e 'input { stdin { } } output { stdout {
 				<script type="text/template">
 					## Filter
 
-					* file-input liefert ein Event pro Zeile
-					* Log-Event mit Regex parsen
+					* file-input results in one event per line
+					* parse log event with regex
 						* grok
 						* multiline
 
-					* strukturiert in ES speichern
+					* store structured in ES
 				</script>
 				
 				<aside class="notes" data-markdown>
@@ -460,19 +460,19 @@ Caused by: javax.el.PropertyNotFoundException: Property 'currentShipper' not fou
 			</section>
 
 			<section>
-				<h2>probleme</h2>
+				<h2>Problems</h2>
 				<div style="display: flex;">
 					<div class="fragment" style="flex:1;">
 						<h4 style="">grok</h4>
 						<ul>
-							<li>komplexe Regex</li>
+							<li>complex regex</li>
 							<li>performance</li>
 						</ul>
 					</div>
 					<div class="fragment" style="flex:1;">
 						<h4 style="">multiline</h4>
 						<ul>
-							<li>multithreading</li>
+							<li>multi threading</li>
 							<li>performance</li>
 						</ul>
 					</div>
@@ -480,9 +480,9 @@ Caused by: javax.el.PropertyNotFoundException: Property 'currentShipper' not fou
 				<br>
 				<div class="fragment">
 					<ul>
-						<li>logstash-indexer stirbt</li>
-						<li>Echtzeit geht verloren</li>
-						<li>Logs gehen verloren</li>
+						<li>logstash indexer dies</li>
+						<li>losing realtime</li>
+						<li>losing log events</li>
 					</ul>
 				</div>
 				<!-- [grok debugger](https://grokdebug.herokuapp.com/) <small>(grokdebug.herokuapp.com)</small> -->
@@ -511,8 +511,8 @@ Caused by: javax.el.PropertyNotFoundException: Property 'currentShipper' not fou
 			<section data-markdown>
 				<script type="text/template">
 					# JSON
-					* strukturiert <!-- .element: class="fragment" -->
-					* typisiert <!-- .element: class="fragment" -->
+					* structured <!-- .element: class="fragment" -->
+					* typed <!-- .element: class="fragment" -->
 
 					Note:
 					- JSON Format
@@ -599,7 +599,7 @@ output {
   }
 }
 				</code></pre>
-				<p class="fragment">keine Filter im Shipper</p>
+				<p class="fragment">no filter for shipper</p>
 
 				<aside class="notes" data-markdown>
 					- IST Zustand
@@ -657,12 +657,12 @@ output {
 			</section>
 
 			<section>
-				<h2>Akzeptanz im Unternehmen</h2>
+				<h2>Company acceptance</h2>
 
 				<ul>
-					<li class="fragment"><strong>Logs</strong> interessiert nur IT</li>
-					<li class="fragment"><strong>Bestellungen</strong> interessieren ALLE</li>
-					<li class="fragment">Realtime Analytics fasziniert</li>
+					<li class="fragment">Only IT is interested in <strong>logs</strong></li>
+					<li class="fragment">Everybody else is interested in <strong>orders</strong></li>
+					<li class="fragment">Realtime analytics is fascinating</li>
 				</ul>
 
 				<aside class="notes" data-markdown>
@@ -670,7 +670,7 @@ output {
 				</aside>
 			</section>
 			<section>
-				<h3>Dashboards auf TFT</h3>
+				<h3>TFT for Dashboards</h3>
 
 				<img src="tft.jpg" width="75%" />
 				<aside class="notes" data-markdown>
@@ -680,7 +680,7 @@ output {
 
 			<section data-markdown>
 				<script type="text/template">
-					### inhaltliches logging
+					### business logging
 					```
 					class OrderData {
 						List<LineItem> lineItems;
@@ -743,12 +743,12 @@ output {
 
 			<section data-markdown>
 				<script type="text/template">
-					<h2>Ausblick: Logfiles</h2>
+					<h2>Outlook: Logfiles</h2>
 
 					<ul>
-						<li class="fragment">Nur noch JSON</li>
-						<li class="fragment">kürzere RollingPolicy</li>
-						<li class="fragment">Weniger Logfiles
+						<li class="fragment">only JSON</li>
+						<li class="fragment">shorter RollingPolicy</li>
+						<li class="fragment">fewer log files
 							<ul>
 								<li><code>application.log</code> vs.</li>
 								<li><code>[order|paypal|billpay|diva|epoq|js|...].log</code></li>
@@ -756,10 +756,10 @@ output {
 						</li>
 						<li class="fragment">[SiftingAppender](http://logback.qos.ch/manual/appenders.html#SiftingAppender) <small>(http://logback.qos.ch/manual/appenders.html#SiftingAppender)</small>
 							<ul>
-								<li>ein Logfile pro Thread</li>
+								<li>one log file per thread</li>
 							</ul>
 						</li>
-						<li class="fragment">LMAX Disruptor RingBuffer mit [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
+						<li class="fragment">LMAX Disruptor RingBuffer with [*AsyncDisruptorAppender]( https://github.com/logstash/logstash-logback-encoder#usage) <small>( https://github.com/logstash/logstash-logback-encoder#usage)</small></li>
 					</ul>
 				</script>
 				
@@ -770,20 +770,20 @@ output {
 
 			<section data-markdown>
 				<script type="text/template">
-					<h2>Ausblick: Elasticsearch</h2>
+					<h2>Outlook: Elasticsearch</h2>
 
 					<ul>
-						<li class="fragment">Mehr Nodes</li>						
+						<li class="fragment">more nodes</li>						
 						<li class="fragment">[Index Template](http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/index-templates.html)</small>
 							<ul>
-								<li><Kein code>_all</code> Feld</li>
-								<li>Kompression</li>
-								<li><code>not_analyzed</code> indizieren <br><small>(oder <code>*.raw</code> nutzen)</small></li>
+								<li><no code>_all</code> field</li>
+								<li>compression</li>
+								<li><code>not_analyzed</code> indexing <br><small>(or use <code>*.raw</code>)</small></li>
 							</ul>
 						</li>
 						<li class="fragment">[Doc Values](http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html) <small>(http://www.elastic.co/guide/en/elasticsearch/guide/current/doc-values.html)</smalll> 
 							<ul>
-								<li><code>disk-based</code> statt <code>in-memory fielddata</code></li>
+								<li><code>disk-based</code> instead of <code>in-memory fielddata</code></li>
 							</ul>
 						</li>
 					</ul>
@@ -796,8 +796,8 @@ output {
 
 			<section data-markdown>
 				<script type="text/template">
-					## Logvolumen
-					* 45 Tage im ES
+					## Log volume
+					* 45 days in ES
 						* daily index
 						* daily snapshots
 						* daily cleanup
@@ -816,17 +816,17 @@ output {
 			<section data-markdown>
 				<script type="text/template">
 					## Staging ELK
-					* neue Konfigurationen testen
-					* Jede Komponente leicht skalierbar
+					* test new configuration
+					* scale every component easily
 						* docker?
 				</script>
 			</section>
 
 			<section data-markdown>
 				<script type="text/template">
-					# Vielen Dank
+					# Thank you
 
-					## Fragen?
+					## Questions?
 
 				</script>
 
